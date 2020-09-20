@@ -1,0 +1,8 @@
+#define __RED "\033[0;31m"
+#define __YELLOW "\33[0;33m"
+#define __MAGENTA "\33[0;35m"
+#define __BLUE "\33[0;34m"
+#define __GREEN "\33[0;32m"
+#define __CYAN "\33[0;36m"
+#define __WHITE "\33[0;37m"
+#define __RESET "\033[0m"
