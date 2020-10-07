@@ -16,9 +16,10 @@ UI::Menu UI::getUI() {
     return _menu;
 };
 
-void UI::init() {
+int UI::init() {
     printTitle();
     setUIMain();
+    return _exit_status;
 }
 
 void UI::setUIMain() {
@@ -32,7 +33,7 @@ void UI::setUIMain() {
             setUILoad();
             break;
         case 3:
-            _game.exit(0);
+            exit(0);
             break;
     }
 }
@@ -68,13 +69,16 @@ void UI::setUIParty() {
 
     StringPrompt prompt(string("Who is in your party?"), StringList({": ",": ",": ",": "}));
     StringList names = prompt.execute();
-
-    // tell game to change party's names
-
+    Party& party = _game.getParty();
+    for(int i=0;i<names.size();i++) {
+        party.getPartyMember(i).setName(names[i]);
+    }
+    
     setUIConfirmNewGame();
 }
 
 void UI::setUIConfirmNewGame() {
+    _menu = Menu::NEW_GAME;
     string str("Confirm game setup: ");
     switch(_game.getDifficulty()) {
         case Difficulty::EASY:
@@ -88,9 +92,20 @@ void UI::setUIConfirmNewGame() {
             break;
     }
 
+    Party& party = _game.getParty();
+    for(int i=0;i<party.getPartySize();i++) {
+        str += "'";
+        str += party.getPartyMember(i).getName();
+        str += "'";
+        if(i != party.getPartySize()-1) {
+            str += ", ";
+        }
+    }
+    
     DialoguePrompt prompt(str, StringList({"Confirm","Retry","Cancel"}));
     switch(prompt.execute()) {
         case 1:
+            // setUITimeOfYear();
             break;
         case 2:
             setUINewGame();
@@ -105,4 +120,8 @@ void UI::printTitle() const {
     Log::log("\n\n");
     Log::log("::::::::::: :::::::::: :::    :::     :::      ::::::::       ::::::::::: :::::::::      :::     ::::::::::: :::\n    :+:     :+:        :+:    :+:   :+: :+:   :+:    :+:          :+:     :+:    :+:   :+: :+:       :+:     :+:\n    +:+     +:+         +:+  +:+   +:+   +:+  +:+                 +:+     +:+    +:+  +:+   +:+      +:+     +:+\n    +#+     +#++:++#     +#++:+   +#++:++#++: +#++:++#++          +#+     +#++:++#:  +#++:++#++:     +#+     +#+\n    +#+     +#+         +#+  +#+  +#+     +#+        +#+          +#+     +#+    +#+ +#+     +#+     +#+     +#+\n    #+#     #+#        #+#    #+# #+#     #+# #+#    #+#          #+#     #+#    #+# #+#     #+#     #+#     #+#\n    ###     ########## ###    ### ###     ###  ########           ###     ###    ### ###     ### ########### ##########\n");
     Log::log("\n\n");
+}
+
+void UI::exit(int exit_status) {
+    _exit_status = exit_status; 
 }

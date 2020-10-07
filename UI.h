@@ -9,13 +9,14 @@ class UI {
             LOAD,
             NEW_GAME,
             PARTY,
+            TIME_OF_YEAR,
         };
     public:
         UI(TexasTrail& game);
         virtual ~UI();
 
         virtual Menu getUI();
-        virtual void init();
+        virtual int init();
         virtual void setUIMain();
         virtual void setUILoad();
         virtual void setUINewGame();
@@ -24,8 +25,11 @@ class UI {
         virtual void printTitle() const;
 
     private:
+        int _exit_status;
         Menu _menu;
         TexasTrail& _game;
+
+        void exit(int exit_status);
 };
 
 #endif

@@ -10,6 +10,5 @@ using Difficulty = Settings::Difficulty;
 int main(int argc, char** argv) {
     TexasTrail texasTrail;
     UI ui(texasTrail);
-    ui.init();
-    return texasTrail.run();
+    return ui.init();
 }

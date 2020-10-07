@@ -4,29 +4,26 @@
 #include <vector>
 #include "Settings.h"
 #include "UI.h"
+#include "Party.h"
 // using std::string;
 // using std::vector;
 
 class TexasTrail {
-public:
-    using StringList = std::vector<std::string>;
-    using Difficulty = Settings::Difficulty;
+    public:
+        using StringList = std::vector<std::string>;
+        using Difficulty = Settings::Difficulty;
 
-public: 
-    TexasTrail();
-    virtual ~TexasTrail();
+    public: 
+        TexasTrail();
+        virtual ~TexasTrail();
 
-    int run();
-    void setDifficulty(Difficulty difficulty);
-    Difficulty getDifficulty();
-    void exit(int exit_status);
+        void setDifficulty(Difficulty difficulty);
+        Difficulty getDifficulty();
+        Party& getParty();
 
-private: 
-    Settings _settings;
-    bool _exit;
-    int _exit_status;
-
-    void init();
+    private: 
+        Settings _settings;
+        Party _party;
 };
 
 #endif
