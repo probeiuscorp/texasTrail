@@ -25,3 +25,7 @@ Settings::Difficulty TexasTrail::getDifficulty() {
 Party& TexasTrail::getParty() {
     return _party;
 };
+
+World& TexasTrail::generateWorld() {
+    WorldGenerator generator();
+}

@@ -5,6 +5,9 @@
 #include "Settings.h"
 #include "UI.h"
 #include "Party.h"
+#include "world/World.h"
+#include "world/WorldGenerator.h"
+
 // using std::string;
 // using std::vector;
 
@@ -20,6 +23,7 @@ class TexasTrail {
         void setDifficulty(Difficulty difficulty);
         Difficulty getDifficulty();
         Party& getParty();
+        World& generateWorld();
 
     private: 
         Settings _settings;
