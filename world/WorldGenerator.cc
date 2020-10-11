@@ -7,6 +7,6 @@ WorldGenerator::~WorldGenerator() {
 
 }
 
-World& WorldGenerator::generateWorld() {
+void WorldGenerator::generateWorld() {
 
 }

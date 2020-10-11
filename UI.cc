@@ -4,7 +4,10 @@
 #include "Settings.h"
 #include "StringPrompt.h"
 #include "Log.h"
+#include "world/City.h"
+#include "UICity.h"
 #include <string>
+
 using Menu = UI::Menu;
 using StringList = DialoguePrompt::StringList;
 using Difficulty = Settings::Difficulty;
@@ -103,9 +106,12 @@ void UI::setUIConfirmNewGame() {
     }
     
     DialoguePrompt prompt(str, StringList({"Confirm","Retry","Cancel"}));
+    City city;
+    UICity uiCity(_game, city);
     switch(prompt.execute()) {
         case 1:
-            // setUITimeOfYear();
+            Log::log("\n ---====---\n\n\n");
+            uiCity.run();
             break;
         case 2:
             setUINewGame();

@@ -26,6 +26,8 @@ Party& TexasTrail::getParty() {
     return _party;
 };
 
-World& TexasTrail::generateWorld() {
+World* TexasTrail::generateWorld() {
     WorldGenerator generator();
+    World* world = new World();
+    return world;
 }

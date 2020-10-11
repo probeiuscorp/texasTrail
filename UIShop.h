@@ -1,11 +1,10 @@
-#ifndef TEXAS_TRAIL_UI_CITY_H
-#define TEXAS_TRAIL_UI_CITY_H
-#include "world/City.h"
+#ifndef TEXAS_TRAIL_UI_SHOP_H
+#define TEXAS_TRAIL_UI_SHOP_H
+#include "Shop.h"
 #include "TexasTrail.h"
 #include "DialoguePrompt.h"
-#include "TablePrompt.h"
 
-class UICity {
+class UIShop {
     public:
         enum class Return {
             CONTINUE,
@@ -14,14 +13,14 @@ class UICity {
     public:
         using StringList = std::vector<std::string>;
     public: 
-        UICity(TexasTrail& game, City& city);
-        virtual ~UICity();
+        UIShop(TexasTrail& game, Shop& shop);
+        virtual ~UIShop();
 
         void virtual run();
 
     private:
         TexasTrail& _game;
-        City& _city;
+        Shop& _shop;
 };
 
 #endif

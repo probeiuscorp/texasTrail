@@ -7,7 +7,7 @@ class WorldGenerator {
         WorldGenerator();
         virtual ~WorldGenerator();
 
-        World& generateWorld();
+        void virtual generateWorld();
 };
 
 #endif

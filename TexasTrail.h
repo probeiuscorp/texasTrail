@@ -23,7 +23,7 @@ class TexasTrail {
         void setDifficulty(Difficulty difficulty);
         Difficulty getDifficulty();
         Party& getParty();
-        World& generateWorld();
+        World* generateWorld();
 
     private: 
         Settings _settings;

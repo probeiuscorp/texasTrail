@@ -1,5 +1,5 @@
-#ifndef DIALOGUE_PROMPT_H
-#define DIALOGUE_PROMPT_H
+#ifndef TEXAS_TRAIL_DIALOGUE_PROMPT_H
+#define TEXAS_TRAIL_DIALOGUE_PROMPT_H
 #include <string>
 #include <vector>
 #include "Formatting.h"

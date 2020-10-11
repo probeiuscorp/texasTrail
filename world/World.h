@@ -5,10 +5,6 @@ class World {
     public: 
         World();
         virtual ~World();
-        
-    private: 
-        Settings _settings;
-        Party _party;
 };
 
 #endif

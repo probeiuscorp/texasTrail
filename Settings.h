@@ -1,5 +1,5 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef TEXAS_TRAIL_SETTINGS_H
+#define TEXAS_TRAIL_SETTINGS_H
 
 class Settings {
 public:
