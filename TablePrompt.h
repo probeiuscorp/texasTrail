@@ -16,7 +16,7 @@ public:
     using TableList = vector<StringList>;
 
 public: 
-    TablePrompt(const string& prompt, const StringList& headers);
+    TablePrompt(const string prompt, const StringList& headers);
     virtual ~TablePrompt();
 
     virtual void add(const StringList& row);
@@ -25,7 +25,7 @@ public:
 private: 
     const StringList _headers;
     TableList _cells;
-    const string& _prompt;
+    const string _prompt;
     int _height = 0;
 
     int getResponse() const;

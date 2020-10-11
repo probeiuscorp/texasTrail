@@ -32,9 +32,9 @@ void UICity::run() {
     }
 
     TablePrompt tPrompt(string("Welcome to Ye Olde Shoppe! What would you like to purchase?"), StringList({"Name","Quantity","Price"}));
-    tPrompt.add(StringList({"Food","20","$75"}));
-    tPrompt.add(StringList({"Axles","3","$150"}));
-    tPrompt.add(StringList({"Clothes","12","$40"}));
-    tPrompt.add(StringList({"Cattle","2","$900"}));
+    tPrompt.add(StringList({"1. Food","20","$75"}));
+    tPrompt.add(StringList({"2. Axles","3","$150"}));
+    tPrompt.add(StringList({"3. Clothes","12","$40"}));
+    tPrompt.add(StringList({"4. Cattle","2","$900"}));
     tPrompt.execute();
 }
