@@ -4,6 +4,7 @@
 #include "TexasTrail.h"
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
+#include "UIShop.h"
 
 class UICity {
     public:
@@ -18,6 +19,7 @@ class UICity {
         virtual ~UICity();
 
         void virtual run();
+        void virtual setUIChooseShop();
 
     private:
         TexasTrail& _game;

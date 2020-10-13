@@ -23,7 +23,7 @@ int TablePrompt::execute() const {
 
     // <painful box drawing>
 
-    Log::log("   %s", _headers[0].c_str());
+    Log::log("    %s", _headers[0].c_str());
     for(int i=0;i<_headers.size()-1;i++) {
         Log::log(numerateChar(" ", column_widths[i]+4-_headers[i].size()).c_str());
         Log::log("%s", _headers[i+1].c_str());
@@ -84,7 +84,7 @@ int TablePrompt::getResponse() const {
 bool TablePrompt::isValidResponse(int response) const {
     bool r = true;
 
-    if(response < 1 || response > _cells.size()) {
+    if(response < 0 || response > _cells.size()) {
         r = false;
     }
 

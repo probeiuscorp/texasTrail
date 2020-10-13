@@ -20,6 +20,7 @@ void UICity::run() {
         case 1:
             break;
         case 2:
+            setUIChooseShop();
             break;
         case 3:
             break;
@@ -30,11 +31,17 @@ void UICity::run() {
         case 6:
             break;
     }
+}
 
-    TablePrompt tPrompt(string("Welcome to Ye Olde Shoppe! What would you like to purchase?"), StringList({"Name","Quantity","Price"}));
-    tPrompt.add(StringList({"1. Food","20","$75"}));
-    tPrompt.add(StringList({"2. Axles","3","$150"}));
-    tPrompt.add(StringList({"3. Clothes","12","$40"}));
-    tPrompt.add(StringList({"4. Cattle","2","$900"}));
-    tPrompt.execute();
+void UICity::setUIChooseShop() {
+    StringList sList({"Leave"});
+    
+    for(Shop shop : _city.shops()) {
+        sList.push_back(shop.name());
+    }
+
+    DialoguePrompt prompt(string("Where would you like to shop?"), sList);
+    
+    UIShop uiShop(_game, _city.shops()[prompt.execute()]);
+    uiShop.run();
 }

@@ -3,6 +3,7 @@
 #include "Shop.h"
 #include "TexasTrail.h"
 #include "DialoguePrompt.h"
+#include "TablePrompt.h"
 
 class UIShop {
     public:
