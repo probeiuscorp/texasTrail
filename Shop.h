@@ -44,7 +44,7 @@ class Shop {
         virtual int stockSize() const;
         virtual const Stock& stockAtIndex(int index) const;
 
-        // Removes item(s) from stock and returns it.
+        // Removes item(s) from stock and then returns it.
         virtual Stock& purchaseStock(int index, int amount);
 
     private:

@@ -7,6 +7,7 @@ class Stack {
         Stack();
         Stack(Item item);
         Stack(Item item, int count);
+        Stack(const Stack& source);
         virtual ~Stack();
 
         Item item() const { return _item; };
