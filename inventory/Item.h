@@ -6,6 +6,7 @@ using std::string;
 class Item {
     public: 
         Item();
+        Item(string name);
         virtual ~Item();
 
         string name() const { return _name; };

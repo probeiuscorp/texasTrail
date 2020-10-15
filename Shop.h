@@ -12,15 +12,14 @@ class Shop {
     public:
         class Stock {
             public:
-                Stock() {}
                 Stock(Stack stack, int count, double price) : _stack(stack), _count(count), _price(price) {}
+                Stock(const Stock& source) : _stack(source.getStack()), _count(source.getCount()), _price(source.getPrice()) {}
                 ~Stock() {}
 
-                Stack& getStack() { return _stack; }
-                void setStack(Stack stack) { _stack = stack; }
-                int getCount() { return _count; }
+                const Stack& getStack() const { return _stack; }
+                int getCount() const { return _count; }
                 void setCount(int count) { _count = count; }
-                double getPrice() { return _price; }
+                double getPrice() const { return _price; }
                 void setPrice(double price) { _price = price; }
 
             private:
@@ -32,7 +31,7 @@ class Shop {
 
     public:
         using StringList = std::vector<std::string>;
-        using StockList = std::vector<Stock>;
+        using StockList = std::vector<Stock*>;
 
     public:
         Shop();
@@ -43,13 +42,15 @@ class Shop {
         virtual string name() const;
         virtual int stockSize() const;
         virtual const Stock& stockAtIndex(int index) const;
+        virtual void addStock(const Stock& stock);
+        virtual void removeStock(int index);
 
         // Removes item(s) from stock and then returns it.
-        virtual Stock& purchaseStock(int index, int amount);
+        virtual void purchaseStock(int index, int amount);
 
     private:
         string _name;
-        int _size;
+        int _size = 0;
         StockList _stocks;
 
 };

@@ -4,6 +4,8 @@
 #include "TexasTrail.h"
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
+#include "Utils.h"
+#include "IntPrompt.h"
 
 class UIShop {
     public:
@@ -11,13 +13,17 @@ class UIShop {
             CONTINUE,
             SAVE_AND_EXIT
         };
+
     public:
         using StringList = std::vector<std::string>;
+
     public: 
         UIShop(TexasTrail& game, Shop& shop);
         virtual ~UIShop();
 
         void virtual run();
+        void virtual setUIPickItem();
+        void virtual setUIPickCount(Shop::Stock stock);
 
     private:
         TexasTrail& _game;

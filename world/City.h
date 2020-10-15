@@ -1,6 +1,8 @@
 #ifndef TEXAS_TRAIL_CITY_H
 #define TEXAS_TRAIL_CITY_H
 #include "Shop.h"
+#include "inventory/Stack.h"
+#include "inventory/Items.h" // TEMPORARY - REMOVE
 #include <string>
 #include <vector>
 using std::vector;
@@ -15,11 +17,13 @@ class City {
         virtual ~City();
 
         virtual string name();
-        virtual ShopList& shops();
+        virtual const ShopList& shops() { return _shops; }
+        virtual int shopSize() { return _shops.size(); }
+        virtual Shop& getShop(int index) { return _shops[index]; }
 
     private:
         string _name = "Indianapolis";
-        ShopList _shops = ShopList({Shop(), Shop()});
+        ShopList _shops = ShopList();
 };
 
 #endif

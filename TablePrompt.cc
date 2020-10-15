@@ -12,11 +12,16 @@ int TablePrompt::execute() const {
     
     vector<int> column_widths;
 
-    for(int i=0;i<_cells.size();i++) {
+    if(_cells.size() == 0 || _cells[0].size() == 0) {
+        Log::log("Empty table, big big problem\n");
+    }
+
+    for(int i=0;i<_cells[0].size();i++) {
         column_widths.push_back(_headers[i].size());
-        for(int j=0;j<_cells[i].size();j++) {
-            if(_cells[i][j].size() > column_widths[j]) {
-                column_widths[j] = _cells[i][j].size();
+        // Log::log("%s\n",_headers[i].size().c_str());
+        for(int j=0;j<_cells.size();j++) {
+            if(_cells[j][i].size() > column_widths[i]) {
+                column_widths[i] = _cells[j][i].size();
             }
         }
     }

@@ -6,10 +6,26 @@ UIShop::UIShop(TexasTrail& game, Shop& shop) : _game(game), _shop(shop) {
 UIShop::~UIShop() {};
 
 void UIShop::run() {
-    TablePrompt prompt(string("Welcome to Ye Olde Shoppe! What would you like to purchase?\n(Enter '0' to leave)"), StringList({"Name","Quantity","Price"}));
-    prompt.add(StringList({"1. Food","20","$75"}));
-    prompt.add(StringList({"2. Axles","3","$150"}));
-    prompt.add(StringList({"3. Clothes","12","$40"}));
-    prompt.add(StringList({"4. Cattle","2","$900"}));
+    setUIPickItem();
+}
+
+void UIShop::setUIPickItem() {
+    TablePrompt prompt(string("Welcome to "+_shop.name()+"! What would you like to purchase? (Enter '0' to leave)"), StringList({"Name","Quantity","Price"}));
+    for(int i=0;i<_shop.stockSize();i++) {
+        const Shop::Stock& stock = _shop.stockAtIndex(i);
+        prompt.add(StringList({string(std::to_string(i+1)+". "+std::to_string(stock.getStack().count())+"x "+stock.getStack().item().name()), 
+                               std::to_string(stock.getCount()), 
+                               string(Utils::formatAsCurrency(stock.getPrice()))}));
+    }
+    int choice = prompt.execute();
+
+    if(choice != 0) {
+        setUIPickCount(_shop.stockAtIndex(choice-1));
+    }
+}
+
+void UIShop::setUIPickCount(Shop::Stock stock) {
+    IntPrompt prompt(string("How many \""+stock.getStack().item().name()+ "\" would you like to purchase? (0-"+std::to_string(stock.getCount())+")"), 0, stock.getCount());
     prompt.execute();
+    setUIPickItem();
 }

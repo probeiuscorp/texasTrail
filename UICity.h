@@ -19,6 +19,7 @@ class UICity {
         virtual ~UICity();
 
         void virtual run();
+        void virtual setUIHome();
         void virtual setUIChooseShop();
 
     private:

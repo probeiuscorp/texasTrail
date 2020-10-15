@@ -15,6 +15,10 @@ void UICity::run() {
     View inventory
     View party
     */
+    setUIHome();
+}
+
+void UICity::setUIHome() {
     DialoguePrompt prompt(string("Welcome to "+_city.name()+"! What would you like to do?"), StringList({"Continue on trail","Shop","View Atlas", "View inventory", "View party", "Save & exit"}));
     switch(prompt.execute()) {
         case 1:
@@ -36,12 +40,17 @@ void UICity::run() {
 void UICity::setUIChooseShop() {
     StringList sList({"Leave"});
     
-    for(Shop shop : _city.shops()) {
+    for(const Shop& shop : _city.shops()) {
         sList.push_back(shop.name());
     }
 
     DialoguePrompt prompt(string("Where would you like to shop?"), sList);
-    
-    UIShop uiShop(_game, _city.shops()[prompt.execute()]);
-    uiShop.run();
+    int choice = prompt.execute();
+
+    if(choice == 1) {
+        setUIHome();
+    } else {
+        UIShop uiShop(_game, _city.getShop(choice-2));
+        uiShop.run();
+    }
 }
