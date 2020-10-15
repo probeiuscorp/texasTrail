@@ -15,7 +15,7 @@ class UICity {
     public:
         using StringList = std::vector<std::string>;
     public: 
-        UICity(TexasTrail& game, City& city);
+        UICity(TexasTrail& game, City& city, const UI& ui);
         virtual ~UICity();
 
         void virtual run();
@@ -25,6 +25,7 @@ class UICity {
     private:
         TexasTrail& _game;
         City& _city;
+        const UI& _ui;
 };
 
 #endif

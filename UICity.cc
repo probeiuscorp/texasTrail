@@ -1,6 +1,6 @@
 #include "UICity.h"
 
-UICity::UICity(TexasTrail& game, City& city) : _game(game), _city(city) {
+UICity::UICity(TexasTrail& game, City& city, const UI& ui) : _game(game), _city(city), _ui(ui) {
 
 }
 
@@ -19,6 +19,8 @@ void UICity::run() {
 }
 
 void UICity::setUIHome() {
+    _ui.clean();
+
     DialoguePrompt prompt(string("Welcome to "+_city.name()+"! What would you like to do?"), StringList({"Continue on trail","Shop","View Atlas", "View inventory", "View party", "Save & exit"}));
     switch(prompt.execute()) {
         case 1:
@@ -38,6 +40,8 @@ void UICity::setUIHome() {
 }
 
 void UICity::setUIChooseShop() {
+    _ui.clean();
+
     StringList sList({"Leave"});
     
     for(const Shop& shop : _city.shops()) {
@@ -50,7 +54,7 @@ void UICity::setUIChooseShop() {
     if(choice == 1) {
         setUIHome();
     } else {
-        UIShop uiShop(_game, _city.getShop(choice-2));
+        UIShop uiShop(_game, _city.getShop(choice-2), _ui);
         uiShop.run();
     }
 }

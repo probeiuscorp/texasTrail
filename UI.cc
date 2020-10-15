@@ -20,13 +20,15 @@ UI::Menu UI::getUI() {
 };
 
 int UI::init() {
-    printTitle();
+    // printTitle();
     setUIMain();
     return _exit_status;
 }
 
 void UI::setUIMain() {
     _menu = Menu::MAIN;
+    clean();
+
     DialoguePrompt prompt(string("Welcome to the Texas Trail! What would you like to do?"), StringList({"Start a new journey","Load from a save","Exit"}));
     switch(prompt.execute()) {
         case 1:
@@ -47,6 +49,8 @@ void UI::setUILoad() {
 
 void UI::setUINewGame() {
     _menu = Menu::NEW_GAME;
+    clean();
+
     DialoguePrompt prompt(string("Please choose difficulty"), StringList({"Easy","Medium","Hard","Nevermind, return to main menu"}));
     switch(prompt.execute()) {
         case 1:
@@ -69,6 +73,7 @@ void UI::setUINewGame() {
 
 void UI::setUIParty() {
     _menu = Menu::PARTY;
+    clean();
 
     StringPrompt prompt(string("Who is in your party?"), StringList({": ",": ",": ",": "}));
     StringList names = prompt.execute();
@@ -82,6 +87,8 @@ void UI::setUIParty() {
 
 void UI::setUIConfirmNewGame() {
     _menu = Menu::NEW_GAME;
+    clean();
+
     string str("Confirm game setup: ");
     switch(_game.getDifficulty()) {
         case Difficulty::EASY:
@@ -107,10 +114,9 @@ void UI::setUIConfirmNewGame() {
     
     DialoguePrompt prompt(str, StringList({"Confirm","Retry","Cancel"}));
     City city;
-    UICity uiCity(_game, city);
+    UICity uiCity(_game, city, *this);
     switch(prompt.execute()) {
         case 1:
-            Log::log("\n ---====---\n\n\n");
             uiCity.run();
             break;
         case 2:
@@ -120,6 +126,11 @@ void UI::setUIConfirmNewGame() {
             setUIMain();
             break;
     }
+}
+
+void UI::clean() const {
+    Log::log("\033[2J\033[1;1H");
+    printTitle();
 }
 
 void UI::printTitle() const {

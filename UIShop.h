@@ -18,7 +18,7 @@ class UIShop {
         using StringList = std::vector<std::string>;
 
     public: 
-        UIShop(TexasTrail& game, Shop& shop);
+        UIShop(TexasTrail& game, Shop& shop, const UI& ui);
         virtual ~UIShop();
 
         void virtual run();
@@ -28,6 +28,7 @@ class UIShop {
     private:
         TexasTrail& _game;
         Shop& _shop;
+        const UI& _ui;
 };
 
 #endif

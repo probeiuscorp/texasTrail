@@ -23,6 +23,7 @@ class UI {
         virtual void setUIParty();
         virtual void setUIConfirmNewGame();
         virtual void printTitle() const;
+        virtual void clean() const;
 
     private:
         int _exit_status;
