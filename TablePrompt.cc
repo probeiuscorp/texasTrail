@@ -8,7 +8,7 @@ void TablePrompt::add(const StringList& row) {
     _height++;
 }
 int TablePrompt::execute() const {
-    Log::log("%s%s" __RESET "\n", Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), _prompt.c_str());
+    Log::log("%s%s" __RESET "\n\n", Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), _prompt.c_str());
     
     vector<int> column_widths;
 

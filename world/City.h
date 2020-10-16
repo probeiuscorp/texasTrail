@@ -1,6 +1,7 @@
 #ifndef TEXAS_TRAIL_CITY_H
 #define TEXAS_TRAIL_CITY_H
 #include "Shop.h"
+#include "NodeFeature.h"
 #include "inventory/Stack.h"
 #include "inventory/Items.h" // TEMPORARY - REMOVE
 #include <string>
@@ -8,7 +9,7 @@
 using std::vector;
 using std::string;
 
-class City {
+class City : public NodeFeature {
     public:
         using ShopList = vector<Shop>;
 
