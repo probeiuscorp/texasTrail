@@ -5,6 +5,10 @@ Node::~Node(){
     delete _feature;
 }
 
+void Node::addPath(Path* path) {
+    _paths.push_back(path);
+}
+
 /*
 
 Shop* shop;

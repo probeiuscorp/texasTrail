@@ -30,13 +30,13 @@ int TablePrompt::execute() const {
 
     Log::log("    %s", _headers[0].c_str());
     for(int i=0;i<_headers.size()-1;i++) {
-        Log::log(numerateChar(" ", column_widths[i]+4-_headers[i].size()).c_str());
+        Log::log(Utils::numerateString(" ", column_widths[i]+4-_headers[i].size()).c_str());
         Log::log("%s", _headers[i+1].c_str());
     }
     Log::log("\n  \u250c");
 
     for(int i=0;i<_headers.size();i++) {
-        Log::log(numerateChar("\u2500", column_widths[i]+3).c_str());
+        Log::log(Utils::numerateString("\u2500", column_widths[i]+3).c_str());
         if(i != _headers.size()-1) {Log::log("\u252c");}
     }
     Log::log("\u2510\n");
@@ -44,11 +44,11 @@ int TablePrompt::execute() const {
     for(int i=0;i<_cells.size();i++) {
         for(int j=0;j<_cells[i].size();j++) {
             Log::log("  \u2502 %s", _cells[i][j].c_str());
-            Log::log(numerateChar(" ", column_widths[j]-_cells[i][j].size()).c_str());
+            Log::log(Utils::numerateString(" ", column_widths[j]-_cells[i][j].size()).c_str());
         }
         Log::log("  \u2502\n  %s", i == _cells.size()-1 ? "\u2514" : "\u251c");
         for(int j=0;j<_cells[i].size();j++) {
-            Log::log(numerateChar("\u2500", column_widths[j]+3).c_str());
+            Log::log(Utils::numerateString("\u2500", column_widths[j]+3).c_str());
             if(j != _cells[i].size()-1) {
                 Log::log("%s", i == _cells.size()-1 ? "\u2534" : "\u253c");
             }
@@ -59,7 +59,7 @@ int TablePrompt::execute() const {
     
     // </painful box drawing>
 
-    Log::log("%sWhat is your choice? " __RESET, Style::New(Formatting::Color::GREEN).with(Formatting::Format::BOLD).text().c_str());
+    Log::log("\n%sWhat is your choice? " __RESET, Style::New(Formatting::Color::GREEN).with(Formatting::Format::BOLD).text().c_str());
 
     int chosen = -1;
     chosen = getResponse();
@@ -94,12 +94,4 @@ bool TablePrompt::isValidResponse(int response) const {
     }
 
     return r;
-}
-
-string TablePrompt::numerateChar(string chr, int count) const {
-    string str = "";
-    for(int i=0;i<count;i++) {
-        str += chr;
-    }
-    return str;
 }

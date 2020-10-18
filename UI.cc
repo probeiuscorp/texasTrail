@@ -1,16 +1,4 @@
 #include "UI.h"
-#include "DialoguePrompt.h"
-#include "TexasTrail.h"
-#include "Settings.h"
-#include "StringPrompt.h"
-#include "Log.h"
-#include "world/City.h"
-#include "UICity.h"
-#include <string>
-
-using Menu = UI::Menu;
-using StringList = DialoguePrompt::StringList;
-using Difficulty = Settings::Difficulty;
 
 UI::UI(TexasTrail& game) : _game(game) {};
 UI::~UI(){};
@@ -113,12 +101,11 @@ void UI::setUIConfirmNewGame() {
     }
     
     DialoguePrompt prompt(str, StringList({"Confirm","Retry","Cancel"}));
-    City city;
-    UICity uiCity(_game, city, *this);
     switch(prompt.execute()) {
-        case 1:
-            uiCity.run();
+        case 1: {
+            setUIGame();
             break;
+        }
         case 2:
             setUINewGame();
             break;
@@ -126,6 +113,15 @@ void UI::setUIConfirmNewGame() {
             setUIMain();
             break;
     }
+}
+
+void UI::setUIGame() {
+    _game.setWorld(_game.generateWorld());
+    UICity uiCity(_game, _game.startingCity(), *this);
+    uiCity.run();
+
+    UITravel uiTravel(_game, *this);
+    uiTravel.run();
 }
 
 void UI::clean() const {

@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "Colors.h"
 #include "Formatting.h"
+#include "Utils.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -30,7 +31,6 @@ private:
 
     int getResponse() const;
     bool isValidResponse(int response) const;
-    string numerateChar(string chr, int count) const;
 };
 
 #endif

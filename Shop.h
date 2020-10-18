@@ -1,6 +1,5 @@
 #ifndef TEXAS_TRAIL_SHOP_H
 #define TEXAS_TRAIL_SHOP_H
-#include "TexasTrail.h"
 #include "DialoguePrompt.h"
 #include "inventory/Stack.h"
 #include <string>

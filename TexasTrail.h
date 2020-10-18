@@ -1,12 +1,16 @@
 #ifndef TEXAS_TRAIL_H
 #define TEXAS_TRAIL_H
-#include <string>
-#include <vector>
 #include "Settings.h"
-#include "UI.h"
 #include "Party.h"
+#include "world/City.h"
 #include "world/World.h"
 #include "world/WorldGenerator.h"
+#include "DialoguePrompt.h"
+#include "Log.h"
+#include "Colors.h"
+#include <string>
+#include <vector>
+#include <stdio.h>
 
 // using std::string;
 // using std::vector;
@@ -21,11 +25,14 @@ class TexasTrail {
         virtual ~TexasTrail();
 
         void setDifficulty(Difficulty difficulty);
+        void setWorld(World* world);
         Difficulty getDifficulty();
         Party& getParty();
         World* generateWorld();
+        City& startingCity();
 
     private: 
+        World* _world;
         Settings _settings;
         Party _party;
 };

@@ -1,6 +1,19 @@
 #ifndef TEXAS_TRAIL_UI_H
 #define TEXAS_TRAIL_UI_H
-class TexasTrail;
+#include "DialoguePrompt.h"
+#include "TexasTrail.h"
+#include "Settings.h"
+#include "StringPrompt.h"
+#include "Log.h"
+#include "world/City.h"
+#include "UICity.h"
+#include "UITravel.h"
+#include <string>
+
+using StringList = DialoguePrompt::StringList;
+using Difficulty = Settings::Difficulty;
+
+// class TexasTrail;
 
 class UI {
     public:
@@ -22,6 +35,7 @@ class UI {
         virtual void setUINewGame();
         virtual void setUIParty();
         virtual void setUIConfirmNewGame();
+        virtual void setUIGame();
         virtual void printTitle() const;
         virtual void clean() const;
 

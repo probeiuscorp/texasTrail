@@ -6,7 +6,9 @@
 #include "TablePrompt.h"
 #include "Utils.h"
 #include "IntPrompt.h"
+#include "UI.h"
 
+class UI;
 class UIShop {
     public:
         enum class Return {

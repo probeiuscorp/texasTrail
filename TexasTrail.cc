@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <string>
-#include "Settings.h"
 #include "TexasTrail.h"
-#include "DialoguePrompt.h"
-#include "Log.h"
-#include "Colors.h"
-using StringList = DialoguePrompt::StringList;
-using std::string;
 
 TexasTrail::TexasTrail() {
     _settings = Settings();
@@ -18,16 +10,23 @@ void TexasTrail::setDifficulty(Difficulty difficulty) {
     _settings.setDifficulty(difficulty);
 }
 
+void TexasTrail::setWorld(World* world) {
+    _world = world;
+}
+
 Settings::Difficulty TexasTrail::getDifficulty() {
     return _settings.getDifficulty();
 }
 
 Party& TexasTrail::getParty() {
     return _party;
-};
+}
 
 World* TexasTrail::generateWorld() {
-    WorldGenerator generator();
-    World* world = new World();
-    return world;
+    WorldGenerator generator;
+    return generator.generateWorld();
+}
+
+City& TexasTrail::startingCity() {
+    return dynamic_cast<City&>(_world->startingNode().getFeature());
 }

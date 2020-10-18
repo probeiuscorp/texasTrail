@@ -7,10 +7,12 @@ using std::vector;
 
 class World {
     public: 
-        World();
+        World(Node* firstNode);
         virtual ~World();
 
-    private:
+        virtual Node& startingNode();
+
+    public:
         using TreeElementList = vector<TreeElement*>;
 
     private:

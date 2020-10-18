@@ -5,6 +5,9 @@
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
 #include "UIShop.h"
+#include "UI.h"
+
+class UI;
 
 class UICity {
     public:
@@ -18,8 +21,8 @@ class UICity {
         UICity(TexasTrail& game, City& city, const UI& ui);
         virtual ~UICity();
 
-        void virtual run();
-        void virtual setUIHome();
+        Return virtual run();
+        Return virtual setUIHome();
         void virtual setUIChooseShop();
 
     private:

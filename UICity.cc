@@ -6,7 +6,7 @@ UICity::UICity(TexasTrail& game, City& city, const UI& ui) : _game(game), _city(
 
 UICity::~UICity() {}
 
-void UICity::run() {
+UICity::Return UICity::run() {
     /* 
     Continue on trail
     Shop
@@ -15,15 +15,16 @@ void UICity::run() {
     View inventory
     View party
     */
-    setUIHome();
+    return setUIHome();
 }
 
-void UICity::setUIHome() {
+UICity::Return UICity::setUIHome() {
     _ui.clean();
 
     DialoguePrompt prompt(string("Welcome to "+_city.name()+"! What would you like to do?"), StringList({"Continue on trail","Shop","View Atlas", "View inventory", "View party", "Save & exit"}));
     switch(prompt.execute()) {
         case 1:
+            return Return::CONTINUE;
             break;
         case 2:
             setUIChooseShop();
@@ -37,6 +38,7 @@ void UICity::setUIHome() {
         case 6:
             break;
     }
+    return Return::CONTINUE;
 }
 
 void UICity::setUIChooseShop() {
@@ -44,8 +46,8 @@ void UICity::setUIChooseShop() {
 
     StringList sList({"Leave"});
     
-    for(const Shop& shop : _city.shops()) {
-        sList.push_back(shop.name());
+    for(int i=0;i<_city.shopSize();i++) {
+        sList.push_back(_city.getShop(i).name());
     }
 
     DialoguePrompt prompt(string("Where would you like to shop?"), sList);

@@ -1,6 +1,6 @@
 #include "World.h"
 
-World::World() {
+World::World(Node* firstNode) : _firstNode(firstNode) {
 
 }
 
@@ -10,4 +10,8 @@ World::~World() {
 
 void World::deleteTree() {
     for(TreeElement* e : _treeElementPool) delete e;
+}
+
+Node& World::startingNode() {
+    return *_firstNode;
 }

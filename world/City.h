@@ -9,21 +9,23 @@
 using std::vector;
 using std::string;
 
+class Shop;
+
 class City : public NodeFeature {
     public:
-        using ShopList = vector<Shop>;
+        using ShopList = vector<Shop*>;
 
     public: 
-        City();
+        City(string name);
         virtual ~City();
 
         virtual string name();
-        virtual const ShopList& shops() { return _shops; }
+        // virtual const ShopList& shops() { return _shops; }
         virtual int shopSize() { return _shops.size(); }
-        virtual Shop& getShop(int index) { return _shops[index]; }
+        virtual Shop& getShop(int index) { return *(_shops[index]); }
 
     private:
-        string _name = "Indianapolis";
+        string _name;
         ShopList _shops = ShopList();
 };
 
