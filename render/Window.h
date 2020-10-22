@@ -2,6 +2,8 @@
 #define TEXAS_TRAIL_WINDOW_H
 #include "render/Panel.h"
 #include "Log.h"
+#include "render/CanvasElement.h"
+#include "Utils.h"
 #include <string>
 using std::string;
 
@@ -15,13 +17,18 @@ class Window {
         virtual void drawPanel(int x, int y, int width, int height, const vector<string>& contents);
         virtual void drawPanel(int x, int y, Panel& panel);
         virtual void drawPanel(Panel& panel);
+        virtual void drawString(int x, int y, string str);
 
-        virtual void print();
+        virtual void setColorXY(int x, int y, string color);
+        virtual void setColorRect(int x, int y, int width, int height, string color);
+
+        virtual void print(int offset);
 
     private:
-        int _width;
-        int _height;
-        vector<string> _canvas;
+        const int _width;
+        const int _height;
+        vector<vector<CanvasElement>> _canvas;
+        vector<vector<CanvasElement>> _colors;
 
 };
 

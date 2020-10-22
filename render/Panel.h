@@ -7,11 +7,18 @@ using std::string;
 
 class Panel {
     public:
+        // Panel();
         Panel(int width, int height);
         Panel(int x, int y, int width, int height);
         Panel(int width, int height, vector<string>& contents);
         Panel(int x, int y, int width, int height, vector<string>& contents);
-        virtual ~Panel();
+        virtual ~Panel() {}
+
+        void setX(int x) { _x = x; }
+        void setY(int y) { _y = y; }
+        void setWidth(int width) { _width = width; }
+        void setHeight(int height) { _height = height; }
+        void setContents(vector<string>& contents) { _contents = contents; }
 
         int x() { return _x; }
         int y() { return _y; }
@@ -24,7 +31,7 @@ class Panel {
         int _y;
         int _width;
         int _height;
-        vector<string>& _contents;
+        vector<string> _contents;
 };
 
 #endif

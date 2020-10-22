@@ -6,3 +6,6 @@
 #define __CYAN "\33[0;36m"
 #define __WHITE "\33[0;37m"
 #define __RESET "\033[0m"
+#define __BOLD "\33[01m"
+#define __ITALIC "\33[03m"
+#define __UNDERLINE "\033[04m"
