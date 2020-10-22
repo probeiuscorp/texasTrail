@@ -15,6 +15,7 @@ class Window {
 
         virtual void drawPanel(int x, int y, int width, int height);
         virtual void drawPanel(int x, int y, int width, int height, const vector<string>& contents);
+        virtual void drawPanel(int x, int y, int width, int height, const vector<string>& contents, string header);
         virtual void drawPanel(int x, int y, Panel& panel);
         virtual void drawPanel(Panel& panel);
         virtual void drawString(int x, int y, string str);

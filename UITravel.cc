@@ -5,6 +5,8 @@ _leftPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _rightPanel(SML_PANEL_WIDTH, SML_
 _popupPanel(POP_PANEL_WIDTH, POP_PANEL_HEIGHT) {
     readFrame(Resources::WAGON_FRAME_0, &_wagonFrame0);
     readFrame(Resources::WAGON_FRAME_1, &_wagonFrame1);
+    _leftPanel.setHeader("PARTY STATUS");
+    _rightPanel.setHeader("ENVIRONMENT");
 }
 UITravel::~UITravel(){}
 
@@ -24,7 +26,7 @@ void UITravel::setUITravel() {
         date = "5/7/1834 6:00 AM";
     }
     
-    vector<string> meterPlateValues = vector<string>({"","     PARTY STATUS", "  HEALTH: xxxx::::::","  MORALE: xxxxxxx:::", "  RESRVD: ----------", "  RESRVD: ----------"});
+    vector<string> meterPlateValues = vector<string>({"", "  HEALTH: xxxx::::::","  MORALE: xxxxxxx:::", "  RESRVD: ----------", "  RESRVD: ----------"});
     vector<string> conditionsPlateValues;
     vector<string> popupContents = vector<string>({"","You have caught dysentary!"});
 

@@ -15,11 +15,11 @@ Window::Window(int width, int height, string background) : _width(width), _heigh
 }
 
 void Window::drawPanel(Panel& panel) {
-    drawPanel(panel.x(), panel.y(), panel.width(), panel.height(), panel.contents());
+    drawPanel(panel.x(), panel.y(), panel.width(), panel.height(), panel.contents(), panel.header());
 }
 
 void Window::drawPanel(int x, int y, Panel& panel) {
-    drawPanel(x, y, panel.width(), panel.height(), panel.contents());
+    drawPanel(x, y, panel.width(), panel.height(), panel.contents(), panel.header());
 }
 
 void Window::drawPanel(int x, int y, int width, int height) {
@@ -27,6 +27,10 @@ void Window::drawPanel(int x, int y, int width, int height) {
 }
 
 void Window::drawPanel(int x, int y, int width, int height, const vector<string>& contents) {
+    drawPanel(x, y, width, height, contents, "");
+}
+
+void Window::drawPanel(int x, int y, int width, int height, const vector<string>& contents, string header) {
     
     /*
     UNICODE GUIDE
@@ -41,6 +45,8 @@ void Window::drawPanel(int x, int y, int width, int height, const vector<string>
     // Whichever comes first, end of panel or end of window
     int minW = _width < width+x ? _width : width+x;
     int minH = _height < height+y ? _height : height+y;
+    int left;
+
 
     // Draw frame
     if(x < _width && y < _height) {
@@ -53,7 +59,12 @@ void Window::drawPanel(int x, int y, int width, int height, const vector<string>
                     } else if(j==minW-1) {
                         _canvas[i][j].setStr("\u256e");
                     } else {
-                        _canvas[i][j].setStr("\u2500");
+                        left = x + width/2 - ceil(header.size()/2.0);
+                        if(header.compare(" ") != 0 && left <= j && j < left+header.size()) {
+                            _canvas[i][j].setStr(header.at(j-left));
+                        } else {
+                            _canvas[i][j].setStr("\u2500");
+                        }
                     }
                 }
                 // bottom of frame

@@ -24,7 +24,7 @@ class UITravel {
 
     private:
         const static int SML_PANEL_WIDTH = 24;
-        const static int SML_PANEL_HEIGHT = 9;
+        const static int SML_PANEL_HEIGHT = 8;
         const static int POP_PANEL_WIDTH = 30;
         const static int POP_PANEL_HEIGHT = 12;
         const static int LRG_PANEL_WIDTH = 62;
