@@ -1,6 +1,6 @@
 #include "Node.h"
 
-Node::Node(NodeFeature* feature) :_feature(feature) {}
+Node::Node(NodeFeature* feature, int x, int y) :_feature(feature), _x(x), _y(y) {}
 Node::~Node(){
     delete _feature;
 }

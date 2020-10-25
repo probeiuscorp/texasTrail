@@ -30,3 +30,7 @@ World* TexasTrail::generateWorld() {
 City& TexasTrail::startingCity() {
     return dynamic_cast<City&>(_world->startingNode().getFeature());
 }
+
+void TexasTrail::tick(int hours) {
+    
+}

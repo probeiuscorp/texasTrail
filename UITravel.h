@@ -8,8 +8,10 @@
 #include "Resources.h"
 #include "render/Panel.h"
 #include "render/Window.h"
-#include <chrono>
-#include <thread>
+// #include <chrono>
+// #include <thread>
+#include <iostream>
+#include <sys/poll.h>
 #include <string>
 #include <fstream>
 using std::string;
@@ -34,7 +36,7 @@ class UITravel {
         const static int RGT_PANEL_OFFSET = SML_PANEL_WIDTH + LRG_PANEL_WIDTH;
 
     private:
-        void setUITravel();
+        void setUITravel(bool paused);
         void readFrame(const Resource& resource, vector<string>* array) const;
 
     private:
@@ -49,6 +51,8 @@ class UITravel {
         Panel _animPanel;
         Panel _popupPanel;
         Window _window;
+
+        string _dummy = "";
 };
 
 #endif

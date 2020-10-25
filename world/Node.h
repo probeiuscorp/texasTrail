@@ -12,7 +12,7 @@ class Node : public TreeElement {
         using PathList = vector<Path*>;
 
     public:
-        Node(NodeFeature* feature);
+        Node(NodeFeature* feature, int x, int y);
         virtual ~Node();
 
         NodeFeature& getFeature() { return *_feature; }
@@ -20,6 +20,8 @@ class Node : public TreeElement {
     private:
         NodeFeature* _feature = nullptr;
         PathList _paths;
+        int _x;
+        int _y;
 };
 
 #endif

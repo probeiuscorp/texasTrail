@@ -3,6 +3,7 @@
 #include "World.h"
 #include "City.h"
 #include "Path.h"
+#include "Biomes.h"
 
 class WorldGenerator {
     public:

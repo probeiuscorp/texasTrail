@@ -30,6 +30,7 @@ class TexasTrail {
         Party& getParty();
         World* generateWorld();
         City& startingCity();
+        void tick(int hours);
 
     private: 
         World* _world;
