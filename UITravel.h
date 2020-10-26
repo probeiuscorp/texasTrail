@@ -51,6 +51,7 @@ class UITravel {
         Panel _animPanel;
         Panel _popupPanel;
         Window _window;
+        int _hour;
 
         string _dummy = "";
 };

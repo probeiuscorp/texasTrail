@@ -21,7 +21,9 @@ class Window {
         virtual void drawString(int x, int y, string str);
 
         virtual void setColorXY(int x, int y, string color);
+        virtual void setColorXY(int x, int y, int r, int g, int b);
         virtual void setColorRect(int x, int y, int width, int height, string color);
+        virtual void setColorRect(int x, int y, int width, int height, int r, int g, int b);
 
         virtual void print(int offset);
 

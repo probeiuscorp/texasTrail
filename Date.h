@@ -8,6 +8,7 @@ using std::string;
 
 class Date {
     public:
+        Date() {}
         Date(int hour, int day, int month, int year);
         virtual ~Date() {}
 
@@ -17,7 +18,13 @@ class Date {
         int hour() const { return _hour; }
         int day() const { return _day; }
         int month() const { return _month; }
-        int year() const { return _hour; }
+        int year() const { return _year; }
+
+        void setTime(int hour, int day, int month, int year);
+        void setHour(int hour) { _hour = hour; }
+        void setDay(int day) { _day = day; }
+        void setMonth(int month) { _month = month; }
+        void setYear(int year) { _year = year; }
 
     private:
         int _hour;
@@ -29,6 +36,7 @@ class Date {
 
     private:
         int monthLength(int month) const;
+        string pad(string str, int num, string with) const;
 };
 
 #endif

@@ -112,12 +112,20 @@ void Window::setColorXY(int x, int y, string color) {
     }
 }
 
+void Window::setColorXY(int x, int y, int r, int g, int b) {
+    setColorXY(x, y, "\033[48;2;"+std::to_string(r)+";"+std::to_string(g)+";"+std::to_string(b)+"m");
+}
+
 void Window::setColorRect(int x, int y, int width, int height, string color) {
     for(int i=0;i<width;i++) {
         for(int j=0;j<height;j++) {
             setColorXY(x+i, y+j, color);
         }
     }
+}
+
+void Window::setColorRect(int x, int y, int width, int height, int r, int g, int b) {
+    setColorRect(x, y, width, height, "\033[48;2;"+std::to_string(r)+";"+std::to_string(g)+";"+std::to_string(b)+"m");
 }
 
 void Window::print(int offset) {

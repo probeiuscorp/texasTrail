@@ -13,7 +13,7 @@ public:
     virtual ~Settings();
 
     void setDifficulty(Difficulty difficulty);
-    Difficulty getDifficulty();
+    Difficulty getDifficulty() const;
 
 private:
     Difficulty _difficulty = Difficulty::MEDIUM;

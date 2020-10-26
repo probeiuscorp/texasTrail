@@ -117,6 +117,7 @@ void UI::setUIConfirmNewGame() {
 
 void UI::setUIGame() {
     _game.setWorld(_game.generateWorld());
+    _game.setTime(10,1,4,1838);
     UICity uiCity(_game, _game.startingCity(), *this);
     uiCity.run();
 
