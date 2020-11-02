@@ -5,14 +5,15 @@ using std::string;
 
 class Item {
     public: 
-        Item();
-        Item(string name);
+        Item(string name, double weight);
         virtual ~Item();
 
         string name() const { return _name; };
+        double weight() const { return _weight; }
 
     private:
         string _name;
+        double _weight;
 
 };
 

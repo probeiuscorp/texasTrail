@@ -6,3 +6,11 @@ Stack::Stack(const Stack& source) : _item(source.item()) {
     _count = source.count();
 }
 Stack::~Stack(){};
+
+string Stack::formatted() const {
+    string str = std::to_string(_count);
+    str += "x ";
+    str += _item.name();
+    
+    return str;
+}

@@ -33,30 +33,35 @@ int TablePrompt::execute() const {
         Log::log(Utils::numerateString(" ", column_widths[i]+4-_headers[i].size()).c_str());
         Log::log("%s", _headers[i+1].c_str());
     }
-    Log::log("\n  \u250c");
+    Log::log("\n  \u256d");
 
     for(int i=0;i<_headers.size();i++) {
         Log::log(Utils::numerateString("\u2500", column_widths[i]+3).c_str());
         if(i != _headers.size()-1) {Log::log("\u252c");}
     }
-    Log::log("\u2510\n");
+    Log::log("\u256e\n");
 
     for(int i=0;i<_cells.size();i++) {
         for(int j=0;j<_cells[i].size();j++) {
             Log::log("  \u2502 %s", _cells[i][j].c_str());
             Log::log(Utils::numerateString(" ", column_widths[j]-_cells[i][j].size()).c_str());
         }
-        Log::log("  \u2502\n  %s", i == _cells.size()-1 ? "\u2514" : "\u251c");
+        Log::log("  \u2502\n  %s", i == _cells.size()-1 ? "\u2570" : "\u251c");
         for(int j=0;j<_cells[i].size();j++) {
             Log::log(Utils::numerateString("\u2500", column_widths[j]+3).c_str());
             if(j != _cells[i].size()-1) {
                 Log::log("%s", i == _cells.size()-1 ? "\u2534" : "\u253c");
             }
         }
-        Log::log("%s\n", i == _cells.size()-1 ? "\u2518" : "\u2524");
+        Log::log("%s\n", i == _cells.size()-1 ? "\u256f" : "\u2524");
     }
     
-    
+    /*
+
+    ITEM       COUNT       WEIGHT
+    apple      5           26lb
+
+    */
     // </painful box drawing>
 
     Log::log("\n%sWhat is your choice? " __RESET, Style::New(Formatting::Color::GREEN).with(Formatting::Format::BOLD).text().c_str());

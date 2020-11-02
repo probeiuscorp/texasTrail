@@ -1,5 +1,4 @@
 #include "Item.h"
 
-Item::Item() {}
-Item::Item(string name) : _name(name) {}
+Item::Item(string name, double weight) : _name(name), _weight(weight) {}
 Item::~Item() {}

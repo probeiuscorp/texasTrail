@@ -1,7 +1,6 @@
 #include "Party.h"
 
 Party::Party() {
-    _partySize = 4;
     _members.resize(_partySize);
 
 }

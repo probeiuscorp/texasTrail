@@ -52,10 +52,7 @@ void UITravel::setUITravel(bool paused) {
 
     _window.setColorRect(SML_PANEL_WIDTH+1, LRG_PANEL_HEIGHT-4, LRG_PANEL_WIDTH-2, 3, __GREEN);
     _hour = _game.date().hour();
-    // int r = 200+rand()%50-25;
-    // int g = 80+rand()%40-20;
-    // int b = 25+rand()%20-10;
-    // printf("%d, %d, %d\n", r, g, b);
+    
     if(_hour >= 9 && _hour <= 18) {
         _window.setColorRect(SML_PANEL_WIDTH+1, 1, LRG_PANEL_WIDTH-2, LRG_PANEL_HEIGHT-5, 52, 72, 81);
     } else if(_hour == 19) {
@@ -69,7 +66,7 @@ void UITravel::setUITravel(bool paused) {
     } else {
         _window.setColorRect(SML_PANEL_WIDTH+1, 1, LRG_PANEL_WIDTH-2, LRG_PANEL_HEIGHT-5, __RESET);
     }
-    // _window.setColorRect(SML_PANEL_WIDTH+1, 1, LRG_PANEL_WIDTH-2, LRG_PANEL_HEIGHT-5, r, g, b);
+    
     Log::log("  %s%s%s" __RESET "\n", Utils::numerateString(" ", SML_PANEL_WIDTH+LRG_PANEL_WIDTH/2-ceil(date.size()/2.0)).c_str(), Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), date.c_str());
     _window.print(0);
     
@@ -85,9 +82,9 @@ void UITravel::setUITravel(bool paused) {
                 break;
             case 2:
             case 3:
+                _exit = true;
                 break;
         }
-        run();
     }
 }
 

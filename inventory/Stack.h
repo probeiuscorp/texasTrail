@@ -1,6 +1,8 @@
 #ifndef TEXAS_TRAIL_STACK_H
 #define TEXAS_TRAIL_STACK_H
 #include "Item.h"
+#include <string>
+using std::string;
 
 class Stack {
     public:
@@ -9,8 +11,10 @@ class Stack {
         Stack(const Stack& source);
         virtual ~Stack();
 
-        const Item& item() const { return _item; };
-        int count() const { return _count; };
+        virtual const Item& item() const { return _item; };
+        virtual int count() const { return _count; };
+        virtual double weight() const { return _item.weight()*_count; }
+        virtual string formatted() const;
 
     private:
         const Item& _item;

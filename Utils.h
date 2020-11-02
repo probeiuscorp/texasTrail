@@ -10,7 +10,9 @@ class Utils {
         ~Utils(){};
 
         static string formatAsCurrency(double dbl);
+        static string formatAsWeight(double dbl);
         static string numerateString(string str, int count);
+        static string stringifyAndRound(double dbl, int round);
 };
 
 #endif
