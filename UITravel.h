@@ -37,6 +37,7 @@ class UITravel {
 
     private:
         void setUITravel(bool paused);
+        void setUIStop();
         void readFrame(const Resource& resource, vector<string>* array) const;
 
     private:

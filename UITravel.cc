@@ -25,8 +25,10 @@ void UITravel::run() {
             }
             setUITravel(false);
         } else {
+            // Consume ENTER
             std::getline(std::cin, _dummy);
             setUITravel(true);
+            setUIStop();
         }
     }
 }
@@ -73,18 +75,20 @@ void UITravel::setUITravel(bool paused) {
     if(!paused) {
         Log::log("%s%sPress %s'ENTER'%s to stop" __RESET "\n", Utils::numerateString(" ", SML_PANEL_WIDTH+LRG_PANEL_WIDTH/2-10).c_str(), Style::New(Formatting::Color::GREEN).with(Formatting::Format::BOLD).text().c_str(), 
                         Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), Style::New(Formatting::Color::GREEN).with(Formatting::Format::BOLD).text().c_str());
-    } else {
-        Log::log("\n");
-        DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Save & exit"}));
-        switch(prompt.execute()) {
-            case 1:
-                run();
-                break;
-            case 2:
-            case 3:
-                _exit = true;
-                break;
-        }
+    }
+}
+
+void UITravel::setUIStop() {
+    Log::log("\n");
+    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Save & exit"}));
+    switch(prompt.execute()) {
+        case 1:
+            run();
+            break;
+        case 2:
+        case 3:
+            _exit = true;
+            break;
     }
 }
 

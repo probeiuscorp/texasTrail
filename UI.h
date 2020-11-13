@@ -43,6 +43,7 @@ class UI {
         int _exit_status;
         Menu _menu;
         TexasTrail& _game;
+        StringList _names;
 
         void exit(int exit_status);
 };

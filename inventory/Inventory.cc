@@ -2,17 +2,26 @@
 
 Inventory::Inventory() : _stacks(StackList()) {}
 Inventory::Inventory(StackList stacks) : _stacks(stacks) {}
-Inventory::~Inventory() {}
+Inventory::~Inventory() {
+    for(Stack* stack : _stacks) {
+        delete stack;
+    }
+}
 
-bool Inventory::add(Stack* stack) {
+bool Inventory::add(Stack& stack) {
     if(_hasMax) {
         updateWeight();
         if(_currentWeight > _maxWeight) {
             return false;
         }
     }
-    _stacks.push_back(stack);
+    _stacks.push_back(&stack);
     return true;
+}
+
+void Inventory::remove(int index) {
+    auto it = _stacks.begin() + index;
+    _stacks.erase(it);
 }
 
 void Inventory::updateWeight() {

@@ -8,7 +8,6 @@ UI::Menu UI::getUI() {
 };
 
 int UI::init() {
-    // printTitle();
     setUIMain();
     return _exit_status;
 }
@@ -64,11 +63,7 @@ void UI::setUIParty() {
     clean();
 
     StringPrompt prompt(string("Who is in your party?"), StringList({": ",": ",": ",": "}));
-    StringList names = prompt.execute();
-    Party& party = _game.getParty();
-    for(int i=0;i<names.size();i++) {
-        party.getPartyMember(i).setName(names[i]);
-    }
+    _names = prompt.execute();
     
     setUIConfirmNewGame();
 }
@@ -90,12 +85,11 @@ void UI::setUIConfirmNewGame() {
             break;
     }
 
-    Party& party = _game.getParty();
-    for(int i=0;i<party.getPartySize();i++) {
+    for(int i=0;i<_names.size();i++) {
         str += "'";
-        str += party.getPartyMember(i).getName();
+        str += _names[i];
         str += "'";
-        if(i != party.getPartySize()-1) {
+        if(i != _names.size()-1) {
             str += ", ";
         }
     }
@@ -117,6 +111,7 @@ void UI::setUIConfirmNewGame() {
 
 void UI::setUIGame() {
     _game.setWorld(_game.generateWorld());
+    _game.generateParty(_names);
     _game.setTime(10,1,4,1838);
     UICity uiCity(_game, _game.startingCity(), *this);
     uiCity.run();

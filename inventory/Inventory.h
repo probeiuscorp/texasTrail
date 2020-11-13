@@ -14,8 +14,9 @@ class Inventory {
         virtual ~Inventory();
 
         // Returns true if successful, false otherwise
-        virtual bool add(Stack* stack);
+        virtual bool add(Stack& stack);
         virtual Stack& get(int index) { return *(_stacks[index]); }
+        virtual void remove(int index);
         virtual int size() { return _stacks.size(); }
         virtual StackList& stacks() { return _stacks; }
 

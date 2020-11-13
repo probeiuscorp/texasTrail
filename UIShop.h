@@ -25,7 +25,7 @@ class UIShop {
 
         void virtual run();
         void virtual setUIPickItem();
-        void virtual setUIPickCount(Shop::Stock stock);
+        void virtual setUIPickCount(int index);
 
     private:
         TexasTrail& _game;

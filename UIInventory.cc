@@ -8,7 +8,7 @@ void UIInventory::run() {
 }
 
 void UIInventory::setUIListItems() {
-    TablePrompt prompt("Please select an item in your party's inventory: (0 to leave)", StringList({"Item", "Count", "Weight"}));
+    TablePrompt prompt("Please select an item in the inventory: (0 to leave)", StringList({"Item", "Count", "Weight"}));
     for(const Stack* stack : _inventory.stacks()) {
         prompt.add(StringList({stack->item().name(), stack->formatted(), Utils::formatAsWeight(stack->weight())}));
     }
@@ -16,6 +16,15 @@ void UIInventory::setUIListItems() {
     int choice = prompt.execute();
 
     if(choice != 0) {
-        
+        setUIItemAction(choice-1);
+    }
+}
+
+void UIInventory::setUIItemAction(int index) {
+    DialoguePrompt prompt(string("What would you like to do with "+_inventory.get(index).formatted()), StringList({"Remove from inventory"}));
+    switch(prompt.execute()) {
+        case 1:
+            _inventory.remove(index);
+            break;
     }
 }

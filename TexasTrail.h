@@ -25,21 +25,23 @@ class TexasTrail {
 
         City& startingCity();
         World* generateWorld();
+        // Must have called generateWorld() first
+        void generateParty(StringList names);
         void tick(int hours);
 
         void setDifficulty(Difficulty difficulty) { _settings.setDifficulty(difficulty); }
         void setWorld(World* world) { _world = world; }
         void setTime(int hour, int day, int month, int year) { _date.setTime(hour, day, month, year); }
         Difficulty getDifficulty() const { return _settings.getDifficulty(); }
-        Party& getParty() { return _party; }
+        Party& getParty() { return *_party; }
         World* getWorld() const { return _world; }
         const Date& date() const { return _date; }
         string formattedTime() const { return _date.formattedTime(); }
 
     private: 
-        World* _world;
+        World* _world = nullptr;
+        Party* _party = nullptr;
         Settings _settings;
-        Party _party;
         Date _date;
 };
 

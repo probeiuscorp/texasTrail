@@ -1,8 +1,11 @@
 #include "Party.h"
 
-Party::Party() {
+Party::Party(StringList names, World& world) : _world(world) {
+    _partySize = names.size();
     _members.resize(_partySize);
-
+    for(int i=0;i<_partySize;i++) {
+        _members[i].setName(names[i]);
+    }
 }
 Party::~Party() {
 

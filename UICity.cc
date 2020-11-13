@@ -53,10 +53,9 @@ void UICity::setUIChooseShop() {
     DialoguePrompt prompt(string("Where would you like to shop?"), sList);
     int choice = prompt.execute();
 
-    if(choice == 1) {
-        setUIHome();
-    } else {
+    if(choice != 1) {
         UIShop uiShop(_game, _city.getShop(choice-2), _ui);
         uiShop.run();
     }
+    setUIHome();
 }

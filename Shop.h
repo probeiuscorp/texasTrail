@@ -11,18 +11,17 @@ class Shop {
     public:
         class Stock {
             public:
-                Stock(Stack stack, int count, double price) : _stack(stack), _count(count), _price(price) {}
-                Stock(const Stock& source) : _stack(source.getStack()), _count(source.getCount()), _price(source.getPrice()) {}
-                ~Stock() {}
+                Stock(Stack* stack, int count, double price) : _stack(stack), _count(count), _price(price) {}
+                ~Stock() { delete _stack; }
 
-                const Stack& getStack() const { return _stack; }
+                Stack& getStack() { return *_stack; }
                 int getCount() const { return _count; }
                 void setCount(int count) { _count = count; }
                 double getPrice() const { return _price; }
                 void setPrice(double price) { _price = price; }
 
             private:
-                Stack _stack;
+                Stack* _stack;
                 int _count;
                 double _price;
                 
@@ -40,12 +39,12 @@ class Shop {
 
         virtual string name() const;
         virtual int stockSize() const;
-        virtual const Stock& stockAtIndex(int index) const;
+        virtual Stock& stockAtIndex(int index);
         virtual void addStock(const Stock& stock);
         virtual void removeStock(int index);
 
         // Removes item(s) from stock and then returns it.
-        virtual void purchaseStock(int index, int amount);
+        Stack& purchaseStock(int index, int amount);
 
     private:
         string _name;
