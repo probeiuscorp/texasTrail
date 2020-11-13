@@ -15,8 +15,6 @@ void UIShop::setUIPickItem() {
     TablePrompt prompt(string("Welcome to "+_shop.name()+"! What would you like to purchase? (Enter '0' to leave)"), StringList({"Name","Quantity","Price"}));
     for(int i=0;i<_shop.stockSize();i++) {
         Shop::Stock& stock = _shop.stockAtIndex(i);
-        printf("%p\n", &stock.getStack());
-
         prompt.add(StringList({string(std::to_string(i+1)+". "+std::to_string(stock.getStack().count())+"x "+stock.getStack().item().name()), 
                                std::to_string(stock.getCount()), 
                                string(Utils::formatAsCurrency(stock.getPrice()))}));
@@ -34,7 +32,7 @@ void UIShop::setUIPickCount(int index) {
     IntPrompt prompt(string("How many \""+stock.getStack().item().name()+ "\" would you like to purchase? (0-"+std::to_string(stock.getCount())+")"), 0, stock.getCount());
     int count = prompt.execute();
     if(count != 0) {
-        _game.getParty().inventory().add(_shop.purchaseStock(index, count));
+        _shop.purchaseStock(index, count, _game.getParty());
     }
     setUIPickItem();
 }

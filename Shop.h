@@ -2,6 +2,7 @@
 #define TEXAS_TRAIL_SHOP_H
 #include "DialoguePrompt.h"
 #include "inventory/Stack.h"
+#include "Party.h"
 #include <string>
 #include <list>
 #include <vector>
@@ -14,7 +15,7 @@ class Shop {
                 Stock(Stack* stack, int count, double price) : _stack(stack), _count(count), _price(price) {}
                 ~Stock() { delete _stack; }
 
-                Stack& getStack() { return *_stack; }
+                Stack& getStack() { return *(_stack); }
                 int getCount() const { return _count; }
                 void setCount(int count) { _count = count; }
                 double getPrice() const { return _price; }
@@ -40,11 +41,10 @@ class Shop {
         virtual string name() const;
         virtual int stockSize() const;
         virtual Stock& stockAtIndex(int index);
-        virtual void addStock(const Stock& stock);
+        virtual void addStock(Stock* stock);
         virtual void removeStock(int index);
 
-        // Removes item(s) from stock and then returns it.
-        Stack& purchaseStock(int index, int amount);
+        void purchaseStock(int index, int amount, Party& party);
 
     private:
         string _name;

@@ -16,6 +16,8 @@ class Stack {
         virtual double weight() const { return _item.weight()*_count; }
         virtual string formatted() const;
 
+        virtual void setCount(int count) { _count = count; }
+
     private:
         const Item& _item;
         int _count;
