@@ -2,6 +2,7 @@
 #define TEXAS_TRAIL_SHOP_H
 #include "DialoguePrompt.h"
 #include "inventory/Stack.h"
+#include "inventory/Inventory.h"
 #include "Party.h"
 #include <string>
 #include <list>
@@ -44,7 +45,7 @@ class Shop {
         virtual void addStock(Stock* stock);
         virtual void removeStock(int index);
 
-        void purchaseStock(int index, int amount, Party& party);
+        Inventory::AddRet purchaseStock(int index, int amount, Party& party);
 
     private:
         string _name;

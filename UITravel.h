@@ -8,8 +8,7 @@
 #include "Resources.h"
 #include "render/Panel.h"
 #include "render/Window.h"
-// #include <chrono>
-// #include <thread>
+#include "UIInventory.h"
 #include <iostream>
 #include <sys/poll.h>
 #include <string>

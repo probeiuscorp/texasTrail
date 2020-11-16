@@ -8,15 +8,29 @@ Inventory::~Inventory() {
     }
 }
 
-bool Inventory::add(Stack& stack) {
+Inventory::AddRet Inventory::add(Stack& stack) {
+    return add(&stack);
+}
+
+Inventory::AddRet Inventory::add(Stack* stack) {
     if(_hasMax) {
         updateWeight();
         if(_currentWeight > _maxWeight) {
-            return false;
+            return AddRet::NO_SPACE;
         }
     }
-    _stacks.push_back(&stack);
-    return true;
+    bool uniqueItem = true;
+    for(int i=0;i<_stacks.size();i++) {
+        if(&(_stacks[i]->item()) == &(stack->item())) {
+            uniqueItem = false;
+            _stacks[i]->setCount(_stacks[i]->count()+stack->count());
+            break;
+        }
+    }
+    if(uniqueItem) {
+        _stacks.push_back(stack);
+    }
+    return AddRet::SUCCESS;
 }
 
 void Inventory::remove(int index) {

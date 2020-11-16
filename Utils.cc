@@ -6,7 +6,7 @@ string Utils::formatAsCurrency(double dbl) {
 }
 
 string Utils::formatAsWeight(double dbl) {
-    string str = string(stringifyAndRound(dbl, 2)+"lbs");
+    string str = string(stringifyAndRound(dbl, 2)+" lbs");
     return str;
 }
 

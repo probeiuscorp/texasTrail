@@ -32,21 +32,26 @@ Shop::Stock& Shop::stockAtIndex(int index) {
     }
 }
 
-void Shop::purchaseStock(int index, int amount, Party& party) {
-    if(index > 0 && index <= stockSize()) {
+Inventory::AddRet Shop::purchaseStock(int index, int amount, Party& party) {
+    if(index >= 0 && index < stockSize()) {
         // amount - requested purchase size :: count - actual size of stock
         int count = _stocks[index]->getCount();
         Stack& stack = _stocks[index]->getStack();
+        Inventory::AddRet ret;
         if(amount >= count) {
-            removeStock(index);
-            stack.setCount(amount-count);
+            ret = party.inventory().add(stack);
+            if(ret == Inventory::AddRet::SUCCESS) {
+                removeStock(index);
+            }
         } else {
-            _stocks[index]->setCount(count-amount);
-            stack.setCount(count);
+            ret = party.inventory().add(new Stack(stack.item(), amount));
+            if(ret == Inventory::AddRet::SUCCESS) {
+                _stocks[index]->setCount(count-amount);
+            }
         }
-        party.inventory().add(stack);
+        return ret;
     } else { 
-        printf("You tried to access a Stock out of bounds. Index: %d, Max: %d [Shop::purchaseStock()]\n", index, stockSize());
+        printf("You tried to access a Stock out of bounds. Index: %d, Size: %d [Shop::purchaseStock()]\n", index, stockSize());
         abort(); 
     }
 }
@@ -57,8 +62,11 @@ void Shop::addStock(Stock* stock) {
 }
 
 void Shop::removeStock(int index) {
-    if(index > 0 && index < stockSize()) {
+    if(index >= 0 && index < stockSize()) {
         _stocks.erase(_stocks.begin()+index);
         _size--;
+    } else { 
+        printf("You tried to access a Stock out of bounds. Index: %d, Size: %d [Shop::removeStock()]\n", index, stockSize());
+        abort(); 
     }
-}
+} 

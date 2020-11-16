@@ -85,7 +85,11 @@ void UITravel::setUIStop() {
         case 1:
             run();
             break;
-        case 2:
+        case 2: {
+            UIInventory uiInventory(_game.getParty().inventory(), _ui);
+            uiInventory.run();
+            run();
+        }
         case 3:
             _exit = true;
             break;
