@@ -4,6 +4,8 @@
 #include "NodeFeature.h"
 #include "inventory/Stack.h"
 #include "inventory/Items.h" // TEMPORARY - REMOVE
+#include "Party.h"
+#include "UICity.h"
 #include <string>
 #include <vector>
 using std::vector;
@@ -23,6 +25,8 @@ class City : public NodeFeature {
         // virtual const ShopList& shops() { return _shops; }
         virtual int shopSize() { return _shops.size(); }
         virtual Shop& getShop(int index) { return *(_shops[index]); }
+
+        void onArrival(Party& party) override;
 
     private:
         string _name;

@@ -17,6 +17,7 @@ class Node : public TreeElement {
 
         NodeFeature& getFeature() { return *_feature; }
         void addPath(Path* path);
+
     private:
         NodeFeature* _feature = nullptr;
         PathList _paths;
