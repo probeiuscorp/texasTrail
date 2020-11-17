@@ -1,7 +1,6 @@
 #ifndef TEXAS_TRAIL_UI_SHOP_H
 #define TEXAS_TRAIL_UI_SHOP_H
 #include "Shop.h"
-#include "TexasTrail.h"
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
 #include "Utils.h"
@@ -9,6 +8,7 @@
 #include "UI.h"
 
 class UI;
+class TexasTrail;
 class UIShop {
     public:
         enum class Return {

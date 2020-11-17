@@ -113,7 +113,7 @@ void UI::setUIGame() {
     _game.setWorld(_game.generateWorld());
     _game.generateParty(_names);
     _game.setTime(10,1,4,1838);
-    UICity uiCity(_game, _game.startingCity(), *this);
+    UICity uiCity(_game, dynamic_cast<City&>(_game.startingNode().getFeature()), *this);
     uiCity.run();
 
     UITravel uiTravel(_game, *this);

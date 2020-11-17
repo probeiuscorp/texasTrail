@@ -12,7 +12,3 @@ City::~City() {}
 std::string City::name() {
     return _name;
 }
-
-void City::onArrival(Party& party) {
-    
-}

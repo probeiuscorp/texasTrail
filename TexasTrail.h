@@ -2,14 +2,14 @@
 #define TEXAS_TRAIL_H
 #include "Settings.h"
 #include "Party.h"
-#include "world/City.h"
+#include "world/Node.h"
 #include "world/World.h"
 #include "world/WorldGenerator.h"
 #include "DialoguePrompt.h"
 #include "Log.h"
 #include "Date.h"
 #include <string>
-#include <vector>
+#include <vector>   
 #include <stdio.h>
 using std::string;
 using std::vector;
@@ -23,7 +23,7 @@ class TexasTrail {
         TexasTrail();
         virtual ~TexasTrail();
 
-        City& startingCity();
+        Node& startingNode();
         World* generateWorld();
         // Must have called generateWorld() first
         void generateParty(StringList names);

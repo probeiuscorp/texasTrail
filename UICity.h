@@ -1,14 +1,13 @@
 #ifndef TEXAS_TRAIL_UI_CITY_H
 #define TEXAS_TRAIL_UI_CITY_H
-#include "world/City.h"
-#include "TexasTrail.h"
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
 #include "UIShop.h"
 #include "UI.h"
 
 class UI;
-
+class City;
+class TexasTrail;
 class UICity {
     public:
         enum class Return {

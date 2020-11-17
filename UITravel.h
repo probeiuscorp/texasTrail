@@ -1,6 +1,5 @@
 #ifndef TEXAS_TRAIL_UI_TRAVEL_H
 #define TEXAS_TRAIL_UI_TRAVEL_H
-#include "TexasTrail.h"
 #include "UI.h"
 #include "Utils.h"
 #include "Colors.h"
@@ -16,6 +15,7 @@
 using std::string;
 
 class UI;
+class TexasTrail;
 class UITravel {
     public:
         UITravel(TexasTrail& game, const UI& ui);

@@ -14,12 +14,16 @@ Party::~Party() {
 Person& Party::getPartyMember(int index) {
     if(0 < index || index > _partySize) {
         return _members[index];
+    } else {
+        printf("Index out of bounds. Index: %d, Size: %d\n", index, _partySize);
+        abort();
     }
-
-    // THROW ERROR?
-    return _members[index];
 }
 
 int Party::getPartySize() const {
     return _partySize;
+}
+
+void Party::tick(int hours) {
+    _distance += Enums::paceToSpeed(_pace) * hours;
 }

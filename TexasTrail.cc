@@ -21,10 +21,11 @@ void TexasTrail::generateParty(StringList names) {
     }
 }
 
-City& TexasTrail::startingCity() {
-    return dynamic_cast<City&>(_world->startingNode().getFeature());
+Node& TexasTrail::startingNode() {
+    return _world->startingNode();
 }
 
 void TexasTrail::tick(int hours) {
     _date.advance(hours);
+    _party->tick(hours);
 }

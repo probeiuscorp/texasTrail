@@ -26,8 +26,6 @@ class City : public NodeFeature {
         virtual int shopSize() { return _shops.size(); }
         virtual Shop& getShop(int index) { return *(_shops[index]); }
 
-        void onArrival(Party& party) override;
-
     private:
         string _name;
         ShopList _shops = ShopList();

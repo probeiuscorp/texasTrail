@@ -25,15 +25,18 @@ class Party {
         Path& path() { return *_path; }
         double distance() { return _distance; }
 
+        void tick(int hours);
+
     private:
         int _partySize = 4;
         vector<Person> _members;
         Inventory _inventory;
         World& _world;
 
-        Path* _path;
-        double _distance;
-        Enums::Pace _pace;
+        Path* _path = nullptr;
+        double _distance = 0;
+        Enums::Pace _pace = Enums::Pace::NORMAL;
+        Enums::Ration _ration = Enums::Ration::NORMAL;
 };
 
 #endif
