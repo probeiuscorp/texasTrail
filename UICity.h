@@ -3,6 +3,7 @@
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
 #include "UIShop.h"
+#include "UICommons.h"
 #include "world/Path.h"
 
 class UI;
@@ -18,6 +19,7 @@ class UICity {
         virtual Path* run();
         virtual bool setUIHome();
         virtual void setUIChooseShop();
+        virtual Path* setUIChooseNextPath();
 
     private:
         TexasTrail& _game;

@@ -13,5 +13,5 @@ Path::Path(Node& nodeFrom, Node& nodeTo, const Biome& biome) : _nodeFrom(nodeFro
 Path::~Path(){};
 
 string Path::name() {
-    return string(_nodeTo.feature().name() + " - " + Utils::stringifyAndRound(_distance,1) + ", " + Utils::toLower(Enums::toString(_biome.enumType()))); // Austin (City) - 5.8mi, desert
+    return string(_nodeTo.feature().name() + " - " + Utils::stringifyAndRound(_distance,1) + "mi, " + Utils::toLower(Enums::toString(_biome.enumType()))); // Austin (City) - 5.8mi, desert
 }

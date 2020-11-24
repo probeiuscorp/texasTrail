@@ -4,8 +4,13 @@
 
 class EndNode : public NodeFeature {
     public:
-        EndNode();
-        virtual ~EndNode();
+        EndNode(string name) : NodeFeature(NodeFeature::EnumFeature::GOAL) { _name = name; }
+        virtual ~EndNode() {}
+
+        virtual string name();
+
+    private:
+        string _name;
 };
 
 #endif

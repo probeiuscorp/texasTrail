@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "world/City.h"
 #include "UICity.h"
+#include "UIGoal.h"
 #include "UITravel.h"
 #include <string>
 

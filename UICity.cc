@@ -7,16 +7,19 @@ UICity::UICity(TexasTrail& game, City& city, const UI& ui) : _game(game), _city(
 UICity::~UICity() {}
 
 Path* UICity::run() {
-    /* 
-    Continue on trail
-    Shop
-    View Atlas
-    Save & exit
-    View inventory
-    View party
-    */
-    if(setUIHome()) { return nullptr; }
-    return _game.party().node()->paths()[0];
+    if(setUIHome()) { 
+        return nullptr; 
+    }
+    if(_game.party().node()->paths().size() > 1) {
+        Path* path = setUIChooseNextPath();
+        if(path == nullptr) {
+            run();
+        } else {
+            return path;
+        }
+    } else {
+        return _game.party().node()->paths()[0];
+    }
 }
 
 bool UICity::setUIHome() {
@@ -59,4 +62,9 @@ void UICity::setUIChooseShop() {
         uiShop.run();
     }
     setUIHome();
+}
+
+Path* UICity::setUIChooseNextPath() {
+    _ui.clean();
+    return UICommons::nextPathSelector(_game.party().node()->paths()); 
 }

@@ -118,14 +118,23 @@ void UI::setUIGame() {
 }
 
 void UI::setUILoop() {
+    bool exit = false;
     while(true) {
         Path* nextPath;
         switch(_game.party().node()->feature().type()) {
-            case NodeFeature::EnumFeature::CITY:
+            case NodeFeature::EnumFeature::CITY: {
                 UICity uiCity(_game, dynamic_cast<City&>(_game.party().node()->feature()), *this);
                 nextPath = uiCity.run();
                 break;
+            }
+            case NodeFeature::EnumFeature::GOAL: {
+                UIGoal uiGoal(dynamic_cast<EndNode&>(_game.party().node()->feature()), *this);
+                uiGoal.run();
+                exit = true;
+                break;
+            }
         }
+        if(exit) break;
         if(nextPath == nullptr) {
             break;
         }

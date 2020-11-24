@@ -16,11 +16,17 @@ World* WorldGenerator::generateWorld() {
     NodeFeature* endCity = new City("Dallas");
     Node* endNode = new Node(endCity, 15.0, 15.0);
 
+    NodeFeature* goalFeature = new EndNode("Lubbock");
+    Node* goalNode = new Node(goalFeature, 40.0, 35.0);
+
     Path* connector = new Path(*startNode, *endNode, Biomes::FOREST);
+    Path* toEnd = new Path(*endNode, *goalNode, Biomes::MOUNTAINS);
 
     pool.push_back(endNode);
     pool.push_back(startNode);
+    pool.push_back(goalNode);
     pool.push_back(connector);
+    pool.push_back(toEnd);
 
     return new World(startNode);
 }

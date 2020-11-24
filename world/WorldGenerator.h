@@ -4,6 +4,7 @@
 #include "City.h"
 #include "Path.h"
 #include "Biomes.h"
+#include "EndNode.h"
 
 class WorldGenerator {
     public:

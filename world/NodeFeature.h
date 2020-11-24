@@ -6,7 +6,8 @@ using std::string;
 class NodeFeature {
     public:
         enum class EnumFeature {
-            CITY
+            CITY,
+            GOAL
         };
 
     protected:
