@@ -4,11 +4,11 @@ namespace Enums {
     double paceToSpeed(Pace pace) {
         switch(pace) {
             case Pace::FAST:
-                return 1.5;
+                return 1.6;
             case Pace::NORMAL:
-                return 1.0;
+                return 1.3;
             case Pace::SLOW:
-                return 0.5;
+                return 0.9;
         }
     }
 
@@ -31,6 +31,15 @@ namespace Enums {
                 return string("Normal");
             case Ration::MINIMAL:
                 return string("Minimal");
+        }
+    }
+
+    string toString(Biome::BiomeEnum biome) {
+        switch(biome) {
+            case Biome::BiomeEnum::FOREST :
+                return string("Forest");
+            case Biome::BiomeEnum::MOUNTAINS:
+                return string("Mountains");
         }
     }
 }

@@ -1,4 +1,6 @@
 #include "NodeFeature.h"
 
-NodeFeature::NodeFeature(){}
+NodeFeature::NodeFeature(EnumFeature type) { 
+    _type = type;
+}
 NodeFeature::~NodeFeature(){}

@@ -22,9 +22,17 @@ class Party {
         int getPartySize() const;
         Inventory& inventory() { return _inventory; }
         const Inventory& CInventory() const { return _inventory; }
-        Path& path() { return *_path; }
-        double distance() { return _distance; }
-
+        Path* path() { return _path; }
+        Node* node() { return _node; }
+        void setNode(Node* node) { _node = node; }
+        void setPath(Path* path) { _path = path; }
+        double distance() const { return _distance; }
+        Enums::Pace pace() const { return _pace; }
+        void setPace(Enums::Pace pace) { _pace = pace; }
+        Enums::Ration ration() const { return _ration; }
+        void setRation(Enums::Ration ration) { _ration = ration; }
+        double money() const { return _money; }
+        void setMoney(double money) { _money = money; }
         void tick(int hours);
 
     private:
@@ -34,7 +42,9 @@ class Party {
         World& _world;
 
         Path* _path = nullptr;
+        Node* _node = nullptr;
         double _distance = 0;
+        double _money = 0;
         Enums::Pace _pace = Enums::Pace::NORMAL;
         Enums::Ration _ration = Enums::Ration::NORMAL;
 };

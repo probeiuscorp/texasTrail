@@ -8,14 +8,15 @@ TexasTrail::~TexasTrail() {
     delete _party;
 }
 
-World* TexasTrail::generateWorld() {
+void TexasTrail::generateWorld() {
     WorldGenerator generator;
-    return generator.generateWorld();
+    _world = generator.generateWorld();
 }
 
 void TexasTrail::generateParty(StringList names) {
     if(_world != nullptr) {
         _party = new Party(names, *_world);
+        _party->setNode(&startingNode());
     } else {
         printf("World is not yet generated. Party creation aborted.\n");
     }

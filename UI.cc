@@ -110,14 +110,35 @@ void UI::setUIConfirmNewGame() {
 }
 
 void UI::setUIGame() {
-    _game.setWorld(_game.generateWorld());
+    _game.generateWorld();
     _game.generateParty(_names);
+    _game.party().setMoney(3000);
     _game.setTime(10,1,4,1838);
-    UICity uiCity(_game, dynamic_cast<City&>(_game.startingNode().getFeature()), *this);
-    uiCity.run();
+    setUILoop();
+}
 
-    UITravel uiTravel(_game, *this);
-    uiTravel.run();
+void UI::setUILoop() {
+    while(true) {
+        Path* nextPath;
+        switch(_game.party().node()->feature().type()) {
+            case NodeFeature::EnumFeature::CITY:
+                UICity uiCity(_game, dynamic_cast<City&>(_game.party().node()->feature()), *this);
+                nextPath = uiCity.run();
+                break;
+        }
+        if(nextPath == nullptr) {
+            break;
+        }
+        _game.party().setPath(nextPath);
+        _game.party().setNode(nullptr);
+        UITravel uiTravel(_game, *this);
+        if(uiTravel.run()) {
+            break;
+        }
+        _game.party().setPath(nullptr);
+        _game.party().setNode(&(nextPath->nodeTo()));
+    }
+    // save game state
 }
 
 void UI::clean() const {

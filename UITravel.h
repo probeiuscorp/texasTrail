@@ -20,8 +20,9 @@ class UITravel {
     public:
         UITravel(TexasTrail& game, const UI& ui);
         virtual ~UITravel();
-    
-        void run();
+
+        // returns 'true' if the user chose to exit, 'false' if a Node was reached
+        bool run();
 
     private:
         const static int SML_PANEL_WIDTH = 24;
@@ -37,6 +38,8 @@ class UITravel {
     private:
         void setUITravel(bool paused);
         void setUIStop();
+        void setUIChoosePace();
+        void setUIChooseRation();
         void readFrame(const Resource& resource, vector<string>* array) const;
 
     private:

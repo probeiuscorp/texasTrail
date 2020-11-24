@@ -36,6 +36,7 @@ class UI {
         virtual void setUIParty();
         virtual void setUIConfirmNewGame();
         virtual void setUIGame();
+        virtual void setUILoop();
         virtual void printTitle() const;
         virtual void clean() const;
 

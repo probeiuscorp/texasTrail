@@ -40,7 +40,7 @@ void UIShop::setUIPickCount(int index, AddRet prevRet) {
     IntPrompt prompt(string("How many \""+stock.getStack().item().name()+ "\" would you like to purchase? (0-"+std::to_string(stock.getCount())+")"), 0, stock.getCount());
     int count = prompt.execute();
     if(count != 0) {
-        AddRet ret = _shop.purchaseStock(index, count, _game.getParty());
+        AddRet ret = _shop.purchaseStock(index, count, _game.party());
         if(ret != AddRet::SUCCESS) {
             setUIPickCount(index, ret);
         }

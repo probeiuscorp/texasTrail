@@ -32,3 +32,23 @@ string Utils::stringifyAndRound(double dbl, int rnd) {
     }
     return cutString;
 }
+
+string Utils::toLower(string str) {
+    string str2 = "";
+    auto it = str.begin();
+    while(it != str.end()) {
+        str2 += std::tolower(*it);
+        it++;
+    }
+    return str2;
+}
+
+string Utils::toUpper(string str) {
+    string str2 = "";
+    auto it = str.begin();
+    while(it != str.end()) {
+        str2 += std::toupper(*it);
+        it++;
+    }
+    return str2;
+}

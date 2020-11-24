@@ -10,7 +10,7 @@ _popupPanel(POP_PANEL_WIDTH, POP_PANEL_HEIGHT) {
 }
 UITravel::~UITravel(){}
 
-void UITravel::run() {
+bool UITravel::run() {
     setUITravel(false);
     while(!_exit) {
         struct pollfd fds[1];
@@ -30,7 +30,11 @@ void UITravel::run() {
             setUITravel(true);
             setUIStop();
         }
+        if(_game.party().path()->distance() <= _game.party().distance()) {
+            return false;
+        }
     }
+    return true;
 }
 
 void UITravel::setUITravel(bool paused) {
@@ -38,9 +42,13 @@ void UITravel::setUITravel(bool paused) {
 
     string date = _game.formattedTime();
     
-    vector<string> meterPlateValues = vector<string>({"", "  HEALTH: xxxx::::::","  MORALE: xxxxxxx:::", "  RESRVD: ----------", "  RESRVD: ----------"});
-    vector<string> conditionsPlateValues = vector<string>({"","  TEMPERATURE: 70F", "  HUMIDITY: 82%", "  BIOME: Mountains", "  DIST. LEFT: 17.1mi"});
+    vector<string> meterPlateValues = vector<string>({"", "  HEALTH: xxxx::::::","  MORALE: xxxxxxx:::"});
+    vector<string> conditionsPlateValues = vector<string>({"","  TEMPERATURE: 70F", "  HUMIDITY: 82%", "  BIOME: Mountains"});
     vector<string> popupContents = vector<string>({"","You have caught dysentary!"});
+    meterPlateValues.push_back(string("  PACE:   "+Enums::toString(_game.party().pace())));
+    meterPlateValues.push_back(string("  RATION: "+Enums::toString(_game.party().ration())));
+    string prettyDist = Utils::stringifyAndRound(_game.party().path()->distance() - _game.party().distance(),1);
+    conditionsPlateValues.push_back(string("  DIST. LEFT: "+prettyDist+"mi"));
 
     _leftPanel.setContents(meterPlateValues);
     _animPanel.setContents(_frame ? _wagonFrame0 : _wagonFrame1);
@@ -80,18 +88,62 @@ void UITravel::setUITravel(bool paused) {
 
 void UITravel::setUIStop() {
     Log::log("\n");
-    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Save & exit"}));
+    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change ration","Save & exit"}));
     switch(prompt.execute()) {
         case 1:
             run();
             break;
         case 2: {
-            UIInventory uiInventory(_game.getParty().inventory(), _ui);
+            UIInventory uiInventory(_game.party().inventory(), _ui);
             uiInventory.run();
             run();
         }
         case 3:
+            setUIChoosePace();
+            run();
+            break;
+        case 4:
+            setUIChooseRation();
+            run();
+            break;
+        case 5:
             _exit = true;
+            break;
+    }
+}
+
+void UITravel::setUIChoosePace() {
+    _ui.clean();
+    setUITravel(true);
+    Log::log("\n");
+    DialoguePrompt prompt = DialoguePrompt("What will the pace be?", DialoguePrompt::StringList({"Fast","Normal","Slow","Cancel"}));
+    switch(prompt.execute()) {
+        case 1:
+            _game.party().setPace(Enums::Pace::FAST);
+            break;
+        case 2:
+            _game.party().setPace(Enums::Pace::NORMAL);
+            break;
+        case 3:
+            _game.party().setPace(Enums::Pace::SLOW);
+            break;
+    }
+}
+
+void UITravel::setUIChooseRation() {
+    _ui.clean();
+    setUITravel(true);
+    Log::log("\n");
+    DialoguePrompt prompt = DialoguePrompt("What will the rations be?", DialoguePrompt::StringList({"Filling","Normal","Minimal","Cancel"}));
+    switch(prompt.execute()) {
+        case 1:
+            _game.party().setRation(Enums::Ration::FILLING);
+            break;
+        case 2:
+            _game.party().setRation(Enums::Ration::NORMAL);
+            break;
+        case 3:
+            _game.party().setRation(Enums::Ration::MINIMAL);
             break;
     }
 }

@@ -21,6 +21,8 @@ class City : public NodeFeature {
         City(string name);
         virtual ~City();
 
+        virtual bool isCity() { return true; }
+
         virtual string name();
         // virtual const ShopList& shops() { return _shops; }
         virtual int shopSize() { return _shops.size(); }

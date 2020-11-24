@@ -12,9 +12,11 @@ class Biome {
         Biome(BiomeEnum biome);
         virtual ~Biome() {}
 
+        virtual BiomeEnum enumType() const { return _biome; }
         virtual int temperature() const { return _temperature; }
     private:
         int _temperature;
+        BiomeEnum _biome;
 };
 
 #endif
