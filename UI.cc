@@ -119,7 +119,7 @@ void UI::setUIGame() {
 
 void UI::setUILoop() {
     bool exit = false;
-    while(true) {
+    while(!_exit) {
         Path* nextPath;
         switch(_game.party().node()->feature().type()) {
             case NodeFeature::EnumFeature::CITY: {
@@ -132,6 +132,10 @@ void UI::setUILoop() {
                 uiGoal.run();
                 exit = true;
                 break;
+            }
+            case NodeFeature::EnumFeature::FORK: {
+                UIFork uiFork(_game, dynamic_cast<RoadFork&>(_game.party().node()->feature()), *this);
+                nextPath = uiFork.run();
             }
         }
         if(exit) break;
@@ -161,6 +165,11 @@ void UI::printTitle() const {
     Log::log("\n\n");
 }
 
+void UI::exit() {
+    exit(0); 
+}
+
 void UI::exit(int exit_status) {
+    _exit = true;
     _exit_status = exit_status; 
 }

@@ -1,6 +1,6 @@
 #include "UIInventory.h"
 
-UIInventory::UIInventory(Inventory& inventory, const UI& ui) : _inventory(inventory), _ui(ui) {}
+UIInventory::UIInventory(Inventory& inventory, UI& ui) : _inventory(inventory), _ui(ui) {}
 UIInventory::~UIInventory() {}
 
 void UIInventory::run() {
@@ -25,9 +25,9 @@ void UIInventory::setUIListItems() {
 
 void UIInventory::setUIItemAction(int index) {
     _ui.clean();
-    DialoguePrompt prompt(string("What would you like to do with "+_inventory.get(index).formatted()), StringList({"Remove from inventory"}));
+    DialoguePrompt prompt(string("What would you like to do with "+_inventory.get(index).formatted()), StringList({"Cancel","Remove from inventory"}));
     switch(prompt.execute()) {
-        case 1:
+        case 2:
             _inventory.remove(index);
             break;
     }

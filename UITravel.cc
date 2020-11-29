@@ -1,6 +1,6 @@
 #include "UITravel.h"
 
-UITravel::UITravel(TexasTrail& game, const UI& ui) : _game(game), _ui(ui), _window(SML_PANEL_WIDTH * 2 + LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
+UITravel::UITravel(TexasTrail& game, UI& ui) : _game(game), _ui(ui), _window(SML_PANEL_WIDTH * 2 + LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
 _leftPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _rightPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _animPanel(LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
 _popupPanel(POP_PANEL_WIDTH, POP_PANEL_HEIGHT) {
     readFrame(Resources::WAGON_FRAME_0, &_wagonFrame0);
@@ -29,6 +29,7 @@ bool UITravel::run() {
             std::getline(std::cin, _dummy);
             setUITravel(true);
             setUIStop();
+            if(!_exit) setUITravel(false);
         }
         if(_game.party().path()->distance() <= _game.party().distance()) {
             return false;
@@ -47,6 +48,7 @@ void UITravel::setUITravel(bool paused) {
     vector<string> popupContents = vector<string>({"","You have caught dysentary!"});
     meterPlateValues.push_back(string("  PACE:   "+Enums::toString(_game.party().pace())));
     meterPlateValues.push_back(string("  RATION: "+Enums::toString(_game.party().ration())));
+    meterPlateValues.push_back(string("  MONEY:  "+Utils::formatAsCurrency(_game.party().money())));
     string prettyDist = Utils::stringifyAndRound(_game.party().path()->distance() - _game.party().distance(),1);
     conditionsPlateValues.push_back(string("  DIST. LEFT: "+prettyDist+"mi"));
 
@@ -88,25 +90,27 @@ void UITravel::setUITravel(bool paused) {
 
 void UITravel::setUIStop() {
     Log::log("\n");
-    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change ration","Save & exit"}));
+    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change rations","Save & exit"}));
     switch(prompt.execute()) {
         case 1:
-            run();
+            // run();
             break;
         case 2: {
             UIInventory uiInventory(_game.party().inventory(), _ui);
             uiInventory.run();
-            run();
+            // run();
+            break;
         }
         case 3:
             setUIChoosePace();
-            run();
+            // run();
             break;
         case 4:
             setUIChooseRation();
-            run();
+            // run();
             break;
         case 5:
+            _ui.exit();
             _exit = true;
             break;
     }
@@ -116,16 +120,16 @@ void UITravel::setUIChoosePace() {
     _ui.clean();
     setUITravel(true);
     Log::log("\n");
-    DialoguePrompt prompt = DialoguePrompt("What will the pace be?", DialoguePrompt::StringList({"Fast","Normal","Slow","Cancel"}));
+    DialoguePrompt prompt = DialoguePrompt("What will the pace be?", DialoguePrompt::StringList({"Cancel","Slow","Normal","Fast"}));
     switch(prompt.execute()) {
-        case 1:
-            _game.party().setPace(Enums::Pace::FAST);
-            break;
         case 2:
-            _game.party().setPace(Enums::Pace::NORMAL);
+            _game.party().setPace(Enums::Pace::SLOW);
             break;
         case 3:
-            _game.party().setPace(Enums::Pace::SLOW);
+            _game.party().setPace(Enums::Pace::NORMAL);
+            break;
+        case 4:
+            _game.party().setPace(Enums::Pace::FAST);
             break;
     }
 }

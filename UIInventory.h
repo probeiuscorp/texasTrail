@@ -10,7 +10,7 @@ using std::vector;
 class UI;
 class UIInventory {
     public:
-        UIInventory(Inventory& inventory, const UI& ui);
+        UIInventory(Inventory& inventory, UI& ui);
         virtual ~UIInventory();
 
         virtual void run();
@@ -19,7 +19,7 @@ class UIInventory {
 
     private:
         Inventory& _inventory;
-        const UI& _ui;
+        UI& _ui;
 };
 
 #endif

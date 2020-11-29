@@ -18,7 +18,7 @@ class UI;
 class TexasTrail;
 class UITravel {
     public:
-        UITravel(TexasTrail& game, const UI& ui);
+        UITravel(TexasTrail& game, UI& ui);
         virtual ~UITravel();
 
         // returns 'true' if the user chose to exit, 'false' if a Node was reached
@@ -44,7 +44,7 @@ class UITravel {
 
     private:
         TexasTrail& _game;
-        const UI& _ui;
+        UI& _ui;
         bool _exit = false;
         bool _frame = false;
         vector<string> _wagonFrame0;

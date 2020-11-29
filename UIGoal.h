@@ -8,14 +8,14 @@
 class UI;
 class UIGoal {
     public:
-        UIGoal(EndNode& goal, const UI& ui);
+        UIGoal(EndNode& goal, UI& ui);
         virtual ~UIGoal() {}
 
         void run();
 
     private:
         EndNode& _goal;
-        const UI& _ui;
+        UI& _ui;
 };
 
 #endif

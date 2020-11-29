@@ -21,7 +21,7 @@ class UIShop {
         using AddRet = Inventory::AddRet;
 
     public: 
-        UIShop(TexasTrail& game, Shop& shop, const UI& ui);
+        UIShop(TexasTrail& game, Shop& shop, UI& ui);
         virtual ~UIShop();
 
         void virtual run();
@@ -31,7 +31,7 @@ class UIShop {
     private:
         TexasTrail& _game;
         Shop& _shop;
-        const UI& _ui;
+        UI& _ui;
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "UICity.h"
 
-UICity::UICity(TexasTrail& game, City& city, const UI& ui) : _game(game), _city(city), _ui(ui) {
+UICity::UICity(TexasTrail& game, City& city, UI& ui) : _game(game), _city(city), _ui(ui) {
 
 }
 
@@ -10,15 +10,12 @@ Path* UICity::run() {
     if(setUIHome()) { 
         return nullptr; 
     }
-    if(_game.party().node()->paths().size() > 1) {
-        Path* path = setUIChooseNextPath();
-        if(path == nullptr) {
-            run();
-        } else {
-            return path;
-        }
+    
+    Path* path = setUIChooseNextPath();
+    if(path == nullptr) {
+        run();
     } else {
-        return _game.party().node()->paths()[0];
+        return path;
     }
 }
 
@@ -34,8 +31,12 @@ bool UICity::setUIHome() {
             break;
         case 3:
             break;
-        case 4:
+        case 4: {
+            UIInventory uiInventory(_game.party().inventory(), _ui);
+            uiInventory.run();
+            setUIHome();
             break;
+        }
         case 5:
             break;
         case 6:

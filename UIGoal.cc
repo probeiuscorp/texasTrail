@@ -1,7 +1,7 @@
 #include "UIGoal.h"
 #include "UI.h"
 
-UIGoal::UIGoal(EndNode& goal, const UI& ui) : _goal(goal), _ui(ui) {}
+UIGoal::UIGoal(EndNode& goal, UI& ui) : _goal(goal), _ui(ui) {}
 
 void UIGoal::run() {
     _ui.clean();

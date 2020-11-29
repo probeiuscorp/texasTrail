@@ -6,8 +6,10 @@
 #include "StringPrompt.h"
 #include "Log.h"
 #include "world/City.h"
+#include "world/RoadFork.h"
 #include "UICity.h"
 #include "UIGoal.h"
+#include "UIFork.h"
 #include "UITravel.h"
 #include <string>
 
@@ -41,13 +43,15 @@ class UI {
         virtual void printTitle() const;
         virtual void clean() const;
 
+        virtual void exit();
+        virtual void exit(int exit_status);
+
     private:
         int _exit_status;
+        bool _exit = false;
         Menu _menu;
         TexasTrail& _game;
         StringList _names;
-
-        void exit(int exit_status);
 };
 
 #endif

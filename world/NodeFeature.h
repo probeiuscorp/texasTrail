@@ -7,7 +7,8 @@ class NodeFeature {
     public:
         enum class EnumFeature {
             CITY,
-            GOAL
+            GOAL,
+            FORK
         };
 
     protected:
@@ -15,8 +16,6 @@ class NodeFeature {
         
     public:
         virtual ~NodeFeature();
-
-        virtual bool isCity(NodeFeature& feature) { return false; }
 
         virtual EnumFeature type() { return _type; }  
         virtual string name() = 0;
