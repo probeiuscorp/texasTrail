@@ -1,4 +1,5 @@
 #include "UICity.h"
+#include "UIViewParty.h"
 
 UICity::UICity(TexasTrail& game, City& city, UI& ui) : _game(game), _city(city), _ui(ui) {
 
@@ -37,8 +38,11 @@ bool UICity::setUIHome() {
             setUIHome();
             break;
         }
-        case 5:
+        case 5: {
+            UIViewParty uiViewParty(_game.party(), _ui);
+            uiViewParty.run();
             break;
+        }
         case 6:
             return true;
             break;

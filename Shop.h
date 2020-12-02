@@ -11,6 +11,13 @@ using std::string;
 
 class Shop {
     public:
+        enum class EnumShopRet {
+            SUCCESS,
+            NOT_ENOUGH_SPACE,
+            NOT_ENOUGH_MONEY
+        };
+
+    public:
         class Stock {
             public:
                 Stock(Stack* stack, int count, double price) : _stack(stack), _count(count), _price(price) {}
@@ -45,7 +52,7 @@ class Shop {
         virtual void addStock(Stock* stock);
         virtual void removeStock(int index);
 
-        Inventory::AddRet purchaseStock(int index, int amount, Party& party);
+        EnumShopRet purchaseStock(int index, int amount, Party& party);
 
     private:
         string _name;

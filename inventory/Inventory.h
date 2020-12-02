@@ -6,24 +6,18 @@ using std::vector;
 
 class Inventory {
     public:
-        // Switch-cases that need updating when new types added: 
-        // UIShop::setUIPickCount()
-        enum class AddRet {
-            SUCCESS,
-            NO_SPACE
-        };
-
-    public:
         using StackList = vector<Stack*>;
 
     public:
         Inventory();
         Inventory(StackList stacks);
+        Inventory(int maxWeight);
+        Inventory(int maxWeight, StackList stacks);
         virtual ~Inventory();
 
-        // Returns true if successful, false otherwise
-        virtual AddRet add(Stack& stack);
-        virtual AddRet add(Stack* stack);
+        // Returns true if there was not enough space
+        virtual bool add(Stack& stack);
+        virtual bool add(Stack* stack);
         virtual Stack& get(int index) { return *(_stacks[index]); }
         virtual void remove(int index);
         virtual int size() { return _stacks.size(); }

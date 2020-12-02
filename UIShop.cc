@@ -22,26 +22,28 @@ void UIShop::setUIPickItem() {
     int choice = prompt.execute();
 
     if(choice != 0) {
-        setUIPickCount(choice-1, AddRet::SUCCESS);
+        setUIPickCount(choice-1, Shop::EnumShopRet::SUCCESS);
     }
 }
 
-void UIShop::setUIPickCount(int index, AddRet prevRet) {
+void UIShop::setUIPickCount(int index, Shop::EnumShopRet prevRet) {
     _ui.clean();
     Shop::Stock& stock = _shop.stockAtIndex(index);
-    if(prevRet != AddRet::SUCCESS) {
+    if(prevRet != Shop::EnumShopRet::SUCCESS) {
         string error;
             switch(prevRet) {
-                case AddRet::NO_SPACE:
+                case Shop::EnumShopRet::NOT_ENOUGH_SPACE:
                     error = "Not enough space";
+                case Shop::EnumShopRet::NOT_ENOUGH_MONEY:
+                    error = "Not enough money";
             }
             Log::log("%sThat did not work." __RESET " (%s)\n", Style::New(Formatting::Color::RED).with(Formatting::Format::BOLD).text().c_str(), error.c_str());
     }
     IntPrompt prompt(string("How many \""+stock.getStack().item().name()+ "\" would you like to purchase? (0-"+std::to_string(stock.getCount())+")"), 0, stock.getCount());
     int count = prompt.execute();
     if(count != 0) {
-        AddRet ret = _shop.purchaseStock(index, count, _game.party());
-        if(ret != AddRet::SUCCESS) {
+        Shop::EnumShopRet ret = _shop.purchaseStock(index, count, _game.party());
+        if(ret != Shop::EnumShopRet::SUCCESS) {
             setUIPickCount(index, ret);
         }
     }

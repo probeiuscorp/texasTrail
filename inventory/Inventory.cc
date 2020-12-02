@@ -2,21 +2,23 @@
 
 Inventory::Inventory() : _stacks(StackList()) {}
 Inventory::Inventory(StackList stacks) : _stacks(stacks) {}
+Inventory::Inventory(int maxWeight) : _maxWeight(maxWeight), _stacks(StackList()) {}
+Inventory::Inventory(int maxWeight, StackList stacks) : _maxWeight(maxWeight), _stacks(stacks) {} 
 Inventory::~Inventory() {
     for(Stack* stack : _stacks) {
         delete stack;
     }
 }
 
-Inventory::AddRet Inventory::add(Stack& stack) {
+bool Inventory::add(Stack& stack) {
     return add(&stack);
 }
 
-Inventory::AddRet Inventory::add(Stack* stack) {
+bool Inventory::add(Stack* stack) {
     if(_hasMax) {
         updateWeight();
         if(_currentWeight > _maxWeight) {
-            return AddRet::NO_SPACE;
+            return true;
         }
     }
     bool uniqueItem = true;
@@ -30,7 +32,7 @@ Inventory::AddRet Inventory::add(Stack* stack) {
     if(uniqueItem) {
         _stacks.push_back(stack);
     }
-    return AddRet::SUCCESS;
+    return false;
 }
 
 void Inventory::remove(int index) {

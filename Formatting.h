@@ -13,6 +13,7 @@ public:
         WHITE,
         CYAN,
         BLACK,
+        NONE
     };
     enum class Format {
         BOLD,

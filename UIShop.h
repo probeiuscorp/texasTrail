@@ -18,7 +18,6 @@ class UIShop {
 
     public:
         using StringList = std::vector<std::string>;
-        using AddRet = Inventory::AddRet;
 
     public: 
         UIShop(TexasTrail& game, Shop& shop, UI& ui);
@@ -26,7 +25,7 @@ class UIShop {
 
         void virtual run();
         void virtual setUIPickItem();
-        void virtual setUIPickCount(int index, AddRet prevRet);
+        void virtual setUIPickCount(int index, Shop::EnumShopRet prevRet);
 
     private:
         TexasTrail& _game;

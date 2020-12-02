@@ -32,26 +32,40 @@ Shop::Stock& Shop::stockAtIndex(int index) {
     }
 }
 
-Inventory::AddRet Shop::purchaseStock(int index, int amount, Party& party) {
+Shop::EnumShopRet Shop::purchaseStock(int index, int amount, Party& party) {
     if(index >= 0 && index < stockSize()) {
         // amount - requested purchase size :: count - actual size of stock
         int count = _stocks[index]->getCount();
         int actual = amount > count ? count : amount;
         Stack& stack = _stocks[index]->getStack();
-        Inventory::AddRet ret;
+
+        if(_stocks[index]->getPrice()*amount > party.money()) {
+            return EnumShopRet::NOT_ENOUGH_MONEY;
+        }
+
+        Shop::EnumShopRet ret;
         if(_stocks[index]->getPrice()*actual <= party.money()) {
             if(amount >= count) {
-                ret = party.inventory().add(stack);
-                if(ret == Inventory::AddRet::SUCCESS) {
+                if(party.inventory().add(stack)) {
+                    ret = EnumShopRet::NOT_ENOUGH_SPACE;
+                } else {
                     removeStock(index);
+                    ret = EnumShopRet::SUCCESS;
                 }
             } else {
-                ret = party.inventory().add(new Stack(stack.item(), amount));
-                if(ret == Inventory::AddRet::SUCCESS) {
+                if(!(party.inventory().add(new Stack(stack.item(), amount)))) {
                     _stocks[index]->setCount(count-amount);
+                    ret = EnumShopRet::SUCCESS;
+                } else {
+                    ret = EnumShopRet::NOT_ENOUGH_SPACE;
                 }
             }
         }
+
+        if(ret == EnumShopRet::SUCCESS) {
+            party.modifyMoney(-_stocks[index]->getPrice()*amount);
+        }
+
         return ret;
     } else { 
         printf("You tried to access a Stock out of bounds. Index: %d, Size: %d [Shop::purchaseStock()]\n", index, stockSize());

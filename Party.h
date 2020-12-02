@@ -33,11 +33,12 @@ class Party {
         void setRation(Enums::Ration ration) { _ration = ration; }
         double money() const { return _money; }
         void setMoney(double money) { _money = money; }
+        bool modifyMoney(double moneyM);
         void tick(int hours);
 
     private:
         int _partySize = 4;
-        vector<Person> _members;
+        vector<Person*> _members;
         Inventory _inventory;
         World& _world;
 

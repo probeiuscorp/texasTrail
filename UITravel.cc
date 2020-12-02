@@ -1,4 +1,5 @@
 #include "UITravel.h"
+#include "UIViewParty.h"
 
 UITravel::UITravel(TexasTrail& game, UI& ui) : _game(game), _ui(ui), _window(SML_PANEL_WIDTH * 2 + LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
 _leftPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _rightPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _animPanel(LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
@@ -90,7 +91,7 @@ void UITravel::setUITravel(bool paused) {
 
 void UITravel::setUIStop() {
     Log::log("\n");
-    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change rations","Save & exit"}));
+    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change rations", "View party", "Save & exit"}));
     switch(prompt.execute()) {
         case 1:
             // run();
@@ -109,7 +110,12 @@ void UITravel::setUIStop() {
             setUIChooseRation();
             // run();
             break;
-        case 5:
+        case 5: {
+            UIViewParty uiViewParty(_game.party(), _ui);
+            uiViewParty.run();
+            break;
+        }
+        case 6:
             _ui.exit();
             _exit = true;
             break;
@@ -138,16 +144,16 @@ void UITravel::setUIChooseRation() {
     _ui.clean();
     setUITravel(true);
     Log::log("\n");
-    DialoguePrompt prompt = DialoguePrompt("What will the rations be?", DialoguePrompt::StringList({"Filling","Normal","Minimal","Cancel"}));
+    DialoguePrompt prompt = DialoguePrompt("What will the rations be?", DialoguePrompt::StringList({"Cancel","Minimal","Normal","Filling"}));
     switch(prompt.execute()) {
-        case 1:
-            _game.party().setRation(Enums::Ration::FILLING);
-            break;
         case 2:
-            _game.party().setRation(Enums::Ration::NORMAL);
+            _game.party().setRation(Enums::Ration::MINIMAL);
             break;
         case 3:
-            _game.party().setRation(Enums::Ration::MINIMAL);
+            _game.party().setRation(Enums::Ration::NORMAL);
+            break;
+        case 4:
+            _game.party().setRation(Enums::Ration::FILLING);
             break;
     }
 }
