@@ -26,7 +26,11 @@ Node& TexasTrail::startingNode() {
     return _world->startingNode();
 }
 
-void TexasTrail::tick(int hours) {
+TexasTrail::EventList TexasTrail::tick(int hours) {
+    _events.clear();
     _date.advance(hours);
-    _party->tick(hours);
+    for(Event* event : _party->tick(hours)) {
+        _events.push_back(event);
+    }
+    return _events;
 }

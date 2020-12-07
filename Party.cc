@@ -34,10 +34,17 @@ bool Party::modifyMoney(double moneyM) {
     }
 }
 
-void Party::tick(int hours) {
+Party::EventList Party::tick(int hours) {
     _distance += Enums::paceToSpeed(_pace) * hours;
 
+    printf("Checkpoint 1\n");
+    
+    EventList events;
     for(Person* person : _members) {
-        person->tick(hours);
+        printf("Checkpoint 2 (%f, %p)\n", person->health(), person);
+        for(Event* event : person->tick(hours)) {
+            events.push_back(event);
+        }
     }
+    return events;
 }

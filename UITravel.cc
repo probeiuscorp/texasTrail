@@ -12,25 +12,32 @@ _popupPanel(POP_PANEL_WIDTH, POP_PANEL_HEIGHT) {
 UITravel::~UITravel(){}
 
 bool UITravel::run() {
-    setUITravel(false);
+    setUITravel(false, nullptr);
     while(!_exit) {
         struct pollfd fds[1];
         fds[0].fd = 0;
         fds[0].events = POLLIN;
 
         if(poll(fds, 1, 1000) == 0) {
-            _game.tick(1);
+            EventList events = _game.tick(1);
+            for(Event* event : events) {
+                setUITravel(true, event);
+                if(event->prompt() != nullptr) {
+                    event->callback(event->prompt()->execute());
+                }
+            }
+
             _hour = _game.date().hour();
             if(_hour >= 6 && _hour <= 22) {
                 _frame = !_frame;
             }
-            setUITravel(false);
+            setUITravel(false, nullptr);
         } else {
             // Consume ENTER
             std::getline(std::cin, _dummy);
-            setUITravel(true);
+            setUITravel(true, nullptr);
             setUIStop();
-            if(!_exit) setUITravel(false);
+            if(!_exit) setUITravel(false, nullptr);
         }
         if(_game.party().path()->distance() <= _game.party().distance()) {
             return false;
@@ -39,7 +46,7 @@ bool UITravel::run() {
     return true;
 }
 
-void UITravel::setUITravel(bool paused) {
+void UITravel::setUITravel(bool paused, Event* event) {
     _ui.clean();
 
     string date = _game.formattedTime();
@@ -61,7 +68,6 @@ void UITravel::setUITravel(bool paused) {
     _window.drawPanel(0, 2, _leftPanel);
     _window.drawPanel(SML_PANEL_WIDTH, 0, _animPanel);
     _window.drawPanel(RGT_PANEL_OFFSET, 2, _rightPanel);
-    // _window.drawPanel(POP_PANEL_OFFSET_X, POP_PANEL_OFFSET_Y, _popupPanel);
 
     _window.setColorRect(SML_PANEL_WIDTH+1, LRG_PANEL_HEIGHT-4, LRG_PANEL_WIDTH-2, 3, __GREEN);
     _hour = _game.date().hour();
@@ -80,6 +86,12 @@ void UITravel::setUITravel(bool paused) {
         _window.setColorRect(SML_PANEL_WIDTH+1, 1, LRG_PANEL_WIDTH-2, LRG_PANEL_HEIGHT-5, __RESET);
     }
     
+    if(event != nullptr) {
+        _popupPanel.setContents(event->popup());
+        _window.drawPanel(POP_PANEL_OFFSET_X, POP_PANEL_OFFSET_Y, _popupPanel);
+        _window.setColorRect(POP_PANEL_OFFSET_X+1, POP_PANEL_OFFSET_Y+1, POP_PANEL_WIDTH-2, POP_PANEL_HEIGHT-2, __RESET);
+    }
+
     Log::log("  %s%s%s" __RESET "\n", Utils::numerateString(" ", SML_PANEL_WIDTH+LRG_PANEL_WIDTH/2-ceil(date.size()/2.0)).c_str(), Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), date.c_str());
     _window.print(0);
     
@@ -124,7 +136,7 @@ void UITravel::setUIStop() {
 
 void UITravel::setUIChoosePace() {
     _ui.clean();
-    setUITravel(true);
+    setUITravel(true, nullptr);
     Log::log("\n");
     DialoguePrompt prompt = DialoguePrompt("What will the pace be?", DialoguePrompt::StringList({"Cancel","Slow","Normal","Fast"}));
     switch(prompt.execute()) {
@@ -142,7 +154,7 @@ void UITravel::setUIChoosePace() {
 
 void UITravel::setUIChooseRation() {
     _ui.clean();
-    setUITravel(true);
+    setUITravel(true, nullptr);
     Log::log("\n");
     DialoguePrompt prompt = DialoguePrompt("What will the rations be?", DialoguePrompt::StringList({"Cancel","Minimal","Normal","Filling"}));
     switch(prompt.execute()) {

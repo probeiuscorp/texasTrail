@@ -31,13 +31,13 @@ void UIShop::setUIPickCount(int index, Shop::EnumShopRet prevRet) {
     Shop::Stock& stock = _shop.stockAtIndex(index);
     if(prevRet != Shop::EnumShopRet::SUCCESS) {
         string error;
-            switch(prevRet) {
-                case Shop::EnumShopRet::NOT_ENOUGH_SPACE:
-                    error = "Not enough space";
-                case Shop::EnumShopRet::NOT_ENOUGH_MONEY:
-                    error = "Not enough money";
-            }
-            Log::log("%sThat did not work." __RESET " (%s)\n", Style::New(Formatting::Color::RED).with(Formatting::Format::BOLD).text().c_str(), error.c_str());
+        switch(prevRet) {
+            case Shop::EnumShopRet::NOT_ENOUGH_SPACE:
+                error = "Not enough space";
+            case Shop::EnumShopRet::NOT_ENOUGH_MONEY:
+                error = "Not enough money";
+        }
+        Log::log("%sThat did not work." __RESET " (%s)\n", Style::New(Formatting::Color::RED).with(Formatting::Format::BOLD).text().c_str(), error.c_str());
     }
     IntPrompt prompt(string("How many \""+stock.getStack().item().name()+ "\" would you like to purchase? (0-"+std::to_string(stock.getCount())+")"), 0, stock.getCount());
     int count = prompt.execute();

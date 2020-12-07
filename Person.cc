@@ -1,5 +1,6 @@
 #include "Person.h"
-#include "party/EffectBrokenLeg.h"
+#include "party/EffectBrokenLeg.h" // temporary
+#include "event/EventGeneric.h" // also temporary
 
 Person::Person() {};
 Person::Person(string name) : _name(name) {
@@ -18,7 +19,7 @@ std::string Person::name() const {
     return _name;
 }
 
-void Person::tick(int hours) {
+Person::EventList Person::tick(int hours) {
     EffectList el;
     for(Effect* effect : _effects) {
         if(!effect->tick(this, hours)) {
@@ -26,6 +27,12 @@ void Person::tick(int hours) {
         }
     }
     _effects.swap(el);
+
+    EventList _events;
+    if(rand()%70<hours) {
+        _events.push_back(new EventGeneric());
+    }
+    return _events;
 }
 
 void Person::cb() {

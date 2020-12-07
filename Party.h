@@ -5,6 +5,7 @@
 #include "world/World.h"
 #include "world/Path.h"
 #include "Enums.h"
+#include "event/Event.h"
 #include <vector>
 #include <string>
 using std::vector;
@@ -13,6 +14,7 @@ using std::string;
 class Party {
     public:
         using StringList = vector<string>;
+        using EventList = Person::EventList;
 
     public:
         Party(StringList names, World& world);
@@ -34,7 +36,7 @@ class Party {
         double money() const { return _money; }
         void setMoney(double money) { _money = money; }
         bool modifyMoney(double moneyM);
-        void tick(int hours);
+        EventList tick(int hours);
 
     private:
         int _partySize = 4;

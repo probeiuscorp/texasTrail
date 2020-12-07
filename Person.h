@@ -1,14 +1,16 @@
 #ifndef TEXAS_TRAIL_PERSON_H
 #define TEXAS_TRAIL_PERSON_H
+#include "party/Effect.h"
+#include "event/Event.h"
 #include <string>
 #include <vector>
-#include "party/Effect.h"
 using std::string;
 using std::vector;
 
 class Person {
     public:
         using EffectList = vector<Effect*>;
+        using EventList = vector<Event*>;
 
     public:
         Person();
@@ -25,7 +27,7 @@ class Person {
         void modifyEnergy(double energyM) { _energy += energyM; cb(); }
         EffectList effects() const { return _effects; }
 
-        void tick(int hours);
+        EventList tick(int hours);
         void kill();
 
     private:

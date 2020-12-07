@@ -8,6 +8,7 @@
 #include "DialoguePrompt.h"
 #include "Log.h"
 #include "Date.h"
+#include "event/Event.h"
 #include <string>
 #include <vector>   
 #include <stdio.h>
@@ -16,8 +17,9 @@ using std::vector;
 
 class TexasTrail {
     public:
-        using StringList = std::vector<std::string>;
+        using StringList = DialoguePrompt::StringList;
         using Difficulty = Settings::Difficulty;
+        using EventList = Party::EventList;
 
     public: 
         TexasTrail();
@@ -27,7 +29,7 @@ class TexasTrail {
         void generateWorld();
         // Must have called generateWorld() first
         void generateParty(StringList names);
-        void tick(int hours);
+        EventList tick(int hours);
 
         void setDifficulty(Difficulty difficulty) { _settings.setDifficulty(difficulty); }
         void setTime(int hour, int day, int month, int year) { _date.setTime(hour, day, month, year); }
@@ -42,6 +44,7 @@ class TexasTrail {
         Party* _party = nullptr;
         Settings _settings;
         Date _date;
+        EventList _events;
 };
 
 #endif
