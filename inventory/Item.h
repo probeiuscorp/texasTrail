@@ -8,8 +8,8 @@ class Item {
         Item(string name, double weight);
         virtual ~Item();
 
-        string name() const { return _name; };
-        double weight() const { return _weight; }
+        virtual string name() const { return _name; };
+        virtual double weight() const { return _weight; }
 
     private:
         string _name;

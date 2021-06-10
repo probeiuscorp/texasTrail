@@ -1,5 +1,5 @@
-#include "UIGoal.h"
-#include "UI.h"
+#include "ui/UIGoal.h"
+#include "ui/UI.h"
 
 UIGoal::UIGoal(EndNode& goal, UI& ui) : _goal(goal), _ui(ui) {}
 

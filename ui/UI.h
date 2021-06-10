@@ -5,8 +5,8 @@
 #include "Settings.h"
 #include "StringPrompt.h"
 #include "Log.h"
-#include "world/City.h"
-#include "world/RoadFork.h"
+#include "City.h"
+#include "RoadFork.h"
 #include "UICity.h"
 #include "UIGoal.h"
 #include "UIFork.h"
@@ -51,7 +51,7 @@ class UI {
         bool _exit = false;
         Menu _menu;
         TexasTrail& _game;
-        StringList _names;
+        vector<Person*> _people;
 };
 
 #endif

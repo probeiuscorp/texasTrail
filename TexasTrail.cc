@@ -13,9 +13,9 @@ void TexasTrail::generateWorld() {
     _world = generator.generateWorld();
 }
 
-void TexasTrail::generateParty(StringList names) {
+void TexasTrail::generateParty(vector<Person*> people) {
     if(_world != nullptr) {
-        _party = new Party(names, *_world);
+        _party = new Party(people, *_world);
         _party->setNode(&startingNode());
     } else {
         printf("World is not yet generated. Party creation aborted.\n");

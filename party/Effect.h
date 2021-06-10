@@ -6,14 +6,17 @@ using std::string;
 class Person;
 class Effect {
     protected:
-        Effect() {}
+        Effect(Person* person) { _person = person; }
 
     public:
         virtual ~Effect() {}
 
-        // returns true if the effect expired
-        virtual bool tick(Person* person, int hours) = 0;
+        // Should return true if the effect expired.
+        virtual bool tick(int hours) = 0;
         virtual string display() = 0;
+
+    protected:
+        Person* _person;
 };
 
 #endif

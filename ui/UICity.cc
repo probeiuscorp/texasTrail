@@ -1,5 +1,5 @@
-#include "UICity.h"
-#include "UIViewParty.h"
+#include "ui/UICity.h"
+#include "ui/UIViewParty.h"
 
 UICity::UICity(TexasTrail& game, City& city, UI& ui) : _game(game), _city(city), _ui(ui) {
 
@@ -14,7 +14,7 @@ Path* UICity::run() {
     
     Path* path = setUIChooseNextPath();
     if(path == nullptr) {
-        run();
+        return run();
     } else {
         return path;
     }
@@ -23,7 +23,7 @@ Path* UICity::run() {
 bool UICity::setUIHome() {
     _ui.clean();
 
-    DialoguePrompt prompt(string("Welcome to "+_city.name()+"! What would you like to do?"), StringList({"Continue on trail","Shop","View Atlas", "View inventory", "View party", "Save & exit"}));
+    DialoguePrompt prompt(string("Welcome to "+_city.name()+"! What would you like to do? ["+Utils::formatAsCurrency(_game.party().money())+"]"), StringList({"Continue on trail","Shop","View Atlas", "View inventory", "View party", "Save & exit"}));
     switch(prompt.execute()) {
         case 1:
             break;

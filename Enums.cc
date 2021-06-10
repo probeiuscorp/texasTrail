@@ -39,7 +39,18 @@ namespace Enums {
             case Biome::BiomeEnum::FOREST :
                 return string("Forest");
             case Biome::BiomeEnum::MOUNTAINS:
+            default:
                 return string("Mountains");
+        }
+    }
+
+    string toString(Person::Gender gender) {
+        switch(gender) {
+            case Person::Gender::FEMALE:
+                return string("Female");
+            case Person::Gender::MALE:
+            default:
+                return string("Male");
         }
     }
 }

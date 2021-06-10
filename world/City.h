@@ -5,7 +5,7 @@
 #include "inventory/Stack.h"
 #include "inventory/Items.h" // TEMPORARY - REMOVE
 #include "Party.h"
-#include "UICity.h"
+#include "ui/UICity.h"
 #include <string>
 #include <vector>
 using std::vector;

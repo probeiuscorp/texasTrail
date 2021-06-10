@@ -1,4 +1,6 @@
-#include "UI.h"
+#include "ui/UI.h"
+#include "PersonGenerator.h"
+#include <iostream>
 
 UI::UI(TexasTrail& game) : _game(game) {};
 UI::~UI(){};
@@ -61,9 +63,14 @@ void UI::setUINewGame() {
 void UI::setUIParty() {
     _menu = Menu::PARTY;
     clean();
-
-    StringPrompt prompt(string("Who is in your party?"), StringList({": ",": ",": ",": "}));
-    _names = prompt.execute();
+    
+    _people = PersonGenerator::generate(4);
+    Log::log("%sYour party:\n" __RESET, Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str());
+    for(Person* person : _people) {
+        Log::log(" > %s\n", person->name().c_str());
+    }
+    Log::log(__GREEN "Press 'ENTER' to continue: " __RESET);
+    std::cin.get();
     
     setUIConfirmNewGame();
 }
@@ -85,11 +92,11 @@ void UI::setUIConfirmNewGame() {
             break;
     }
 
-    for(int i=0;i<_names.size();i++) {
+    for(int i=0;i<_people.size();i++) {
         str += "'";
-        str += _names[i];
+        str += _people[i]->name();
         str += "'";
-        if(i != _names.size()-1) {
+        if(i != _people.size()-1) {
             str += ", ";
         }
     }
@@ -111,9 +118,10 @@ void UI::setUIConfirmNewGame() {
 
 void UI::setUIGame() {
     _game.generateWorld();
-    _game.generateParty(_names);
+    _game.generateParty(_people);
     _game.party().setMoney(3000);
     _game.setTime(10,1,4,1838);
+    PersonGenerator::unload();
     setUILoop();
 }
 

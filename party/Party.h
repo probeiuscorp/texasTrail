@@ -6,6 +6,7 @@
 #include "world/Path.h"
 #include "Enums.h"
 #include "event/Event.h"
+#include "Wagon.h"
 #include <vector>
 #include <string>
 using std::vector;
@@ -17,7 +18,7 @@ class Party {
         using EventList = Person::EventList;
 
     public:
-        Party(StringList names, World& world);
+        Party(vector<Person*> members, World& world);
         virtual ~Party();
 
         Person& getPartyMember(int index);
@@ -37,12 +38,14 @@ class Party {
         void setMoney(double money) { _money = money; }
         bool modifyMoney(double moneyM);
         EventList tick(int hours);
+        Wagon& wagon() { return _wagon; }
 
     private:
         int _partySize = 4;
         vector<Person*> _members;
         Inventory _inventory;
         World& _world;
+        Wagon _wagon;
 
         Path* _path = nullptr;
         Node* _node = nullptr;

@@ -1,4 +1,4 @@
-#include "UIShop.h"
+#include "ui/UIShop.h"
 
 UIShop::UIShop(TexasTrail& game, Shop& shop, UI& ui) : _game(game), _shop(shop), _ui(ui) {
 

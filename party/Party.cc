@@ -1,11 +1,7 @@
 #include "Party.h"
+#include "PersonGenerator.h"
 
-Party::Party(StringList names, World& world) : _world(world) {
-    _partySize = names.size();
-    for(int i=0;i<_partySize;i++) {
-        _members.push_back(new Person(names[i]));
-    }
-}
+Party::Party(vector<Person*> members, World& world) : _members(members), _world(world), _wagon(Wagon(20000.0)) {}
 Party::~Party() {
     for(Person* person : _members) {
         delete person;
@@ -36,12 +32,9 @@ bool Party::modifyMoney(double moneyM) {
 
 Party::EventList Party::tick(int hours) {
     _distance += Enums::paceToSpeed(_pace) * hours;
-
-    printf("Checkpoint 1\n");
     
     EventList events;
     for(Person* person : _members) {
-        printf("Checkpoint 2 (%f, %p)\n", person->health(), person);
         for(Event* event : person->tick(hours)) {
             events.push_back(event);
         }

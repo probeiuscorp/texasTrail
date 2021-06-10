@@ -15,6 +15,7 @@
 using std::string;
 using std::vector;
 
+class Person;
 class TexasTrail {
     public:
         using StringList = DialoguePrompt::StringList;
@@ -28,7 +29,7 @@ class TexasTrail {
         Node& startingNode();
         void generateWorld();
         // Must have called generateWorld() first
-        void generateParty(StringList names);
+        void generateParty(vector<Person*> people);
         EventList tick(int hours);
 
         void setDifficulty(Difficulty difficulty) { _settings.setDifficulty(difficulty); }

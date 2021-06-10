@@ -20,7 +20,7 @@ int DialoguePrompt::execute() const {
     chosen = getResponse();
 
     while(!isValidResponse(chosen)) {
-        Log::log( __RED "Invalid Reponse." __RESET " What is your choice? ");
+        Log::log( __RED "Invalid Response." __RESET " What is your choice? ");
         chosen = getResponse();
     }
 

@@ -2,9 +2,10 @@
 #define TEXAS_TRAIL_UI_CITY_H
 #include "DialoguePrompt.h"
 #include "TablePrompt.h"
-#include "UIShop.h"
-#include "UICommons.h"
+#include "ui/UIShop.h"
+#include "ui/UICommons.h"
 #include "world/Path.h"
+#include "Utils.h"
 
 class UI;
 class City;

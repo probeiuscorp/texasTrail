@@ -3,13 +3,16 @@
 #include "Settings.h"
 #include "DialoguePrompt.h"
 #include "TexasTrail.h"
-#include "UI.h"
+#include "ui/UI.h"
+#include "PersonGenerator.h"
 
 using StringList = DialoguePrompt::StringList;
 using std::string;
 using Difficulty = Settings::Difficulty;
 
 int main(int argc, char** argv) {
+    srand(time(nullptr));
+    PersonGenerator::load();
     TexasTrail texasTrail;
     UI ui(texasTrail);
     return ui.init();

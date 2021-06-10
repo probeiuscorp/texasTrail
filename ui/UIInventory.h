@@ -1,6 +1,6 @@
 #ifndef TEXAS_TRAIL_UI_INVENTORY
 #define TEXAS_TRAIL_UI_INVENTORY
-#include "UI.h"
+#include "ui/UI.h"
 #include "inventory/Inventory.h"
 #include <string>
 #include <vector>
@@ -16,6 +16,7 @@ class UIInventory {
         virtual void run();
         virtual void setUIListItems();
         virtual void setUIItemAction(int index);
+        virtual void setUIRemove(int index);
 
     private:
         Inventory& _inventory;

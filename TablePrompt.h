@@ -22,6 +22,7 @@ public:
 
     virtual void add(const StringList& row);
     virtual int execute() const;
+    virtual int execute(int width) const;
 
 private: 
     const StringList _headers;

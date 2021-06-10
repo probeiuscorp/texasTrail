@@ -17,6 +17,7 @@ class UIViewParty {
         UI& _ui;
 
         virtual void setUIViewPerson(Person& person);
+        virtual void setUIViewDeadPerson(Person& person);
 };
 
 #endif

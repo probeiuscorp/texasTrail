@@ -1,12 +1,17 @@
 #ifndef TEXAS_TRAIL_ITEMS_H
 #define TEXAS_TRAIL_ITEMS_H
-#include "Item.h"
+#include "inventory/Item.h"
+#include "inventory/ItemFood.h"
 
 class Items {
     public:
         static const Item AXLE;
         static const Item EGG;
         static const Item MUSKET;
+        static const ItemFood MEAT;
+        static const ItemFood BREAD;
+        static const ItemFood FRUIT;
+        static const ItemFood CIGAR;
         
 };
 

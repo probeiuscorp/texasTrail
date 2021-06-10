@@ -1,5 +1,5 @@
-#include "UITravel.h"
-#include "UIViewParty.h"
+#include "ui/UITravel.h"
+#include "ui/UIViewParty.h"
 
 UITravel::UITravel(TexasTrail& game, UI& ui) : _game(game), _ui(ui), _window(SML_PANEL_WIDTH * 2 + LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
 _leftPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _rightPanel(SML_PANEL_WIDTH, SML_PANEL_HEIGHT), _animPanel(LRG_PANEL_WIDTH, LRG_PANEL_HEIGHT), 
@@ -12,7 +12,7 @@ _popupPanel(POP_PANEL_WIDTH, POP_PANEL_HEIGHT) {
 UITravel::~UITravel(){}
 
 bool UITravel::run() {
-    setUITravel(false, nullptr);
+    drawTravelUI(false, nullptr);
     while(!_exit) {
         struct pollfd fds[1];
         fds[0].fd = 0;
@@ -21,23 +21,25 @@ bool UITravel::run() {
         if(poll(fds, 1, 1000) == 0) {
             EventList events = _game.tick(1);
             for(Event* event : events) {
-                setUITravel(true, event);
+                drawTravelUI(true, event);
+                Log::log("\n");
                 if(event->prompt() != nullptr) {
                     event->callback(event->prompt()->execute());
                 }
+                delete event;
             }
 
             _hour = _game.date().hour();
             if(_hour >= 6 && _hour <= 22) {
                 _frame = !_frame;
             }
-            setUITravel(false, nullptr);
+            drawTravelUI(false, nullptr);
         } else {
             // Consume ENTER
             std::getline(std::cin, _dummy);
-            setUITravel(true, nullptr);
+            drawTravelUI(true, nullptr);
             setUIStop();
-            if(!_exit) setUITravel(false, nullptr);
+            if(!_exit) drawTravelUI(false, nullptr);
         }
         if(_game.party().path()->distance() <= _game.party().distance()) {
             return false;
@@ -46,18 +48,20 @@ bool UITravel::run() {
     return true;
 }
 
-void UITravel::setUITravel(bool paused, Event* event) {
+void UITravel::drawTravelUI(bool paused, Event* event) {
     _ui.clean();
 
     string date = _game.formattedTime();
+    Path* path = _game.party().path();
     
     vector<string> meterPlateValues = vector<string>({"", "  HEALTH: xxxx::::::","  MORALE: xxxxxxx:::"});
-    vector<string> conditionsPlateValues = vector<string>({"","  TEMPERATURE: 70F", "  HUMIDITY: 82%", "  BIOME: Mountains"});
+    vector<string> conditionsPlateValues = vector<string>({"","  TEMPERATURE: 70F", "  HUMIDITY: 82%", "  BIOME: "+path->biome().name()});
     vector<string> popupContents = vector<string>({"","You have caught dysentary!"});
     meterPlateValues.push_back(string("  PACE:   "+Enums::toString(_game.party().pace())));
     meterPlateValues.push_back(string("  RATION: "+Enums::toString(_game.party().ration())));
     meterPlateValues.push_back(string("  MONEY:  "+Utils::formatAsCurrency(_game.party().money())));
-    string prettyDist = Utils::stringifyAndRound(_game.party().path()->distance() - _game.party().distance(),1);
+    meterPlateValues.push_back(string(""));
+    string prettyDist = Utils::stringifyAndRound(Utils::max(path->distance() - _game.party().distance(), 0),1);
     conditionsPlateValues.push_back(string("  DIST. LEFT: "+prettyDist+"mi"));
 
     _leftPanel.setContents(meterPlateValues);
@@ -69,7 +73,8 @@ void UITravel::setUITravel(bool paused, Event* event) {
     _window.drawPanel(SML_PANEL_WIDTH, 0, _animPanel);
     _window.drawPanel(RGT_PANEL_OFFSET, 2, _rightPanel);
 
-    _window.setColorRect(SML_PANEL_WIDTH+1, LRG_PANEL_HEIGHT-4, LRG_PANEL_WIDTH-2, 3, __GREEN);
+    const Color& color = path->biome().color();
+    _window.setColorRect(SML_PANEL_WIDTH+1, LRG_PANEL_HEIGHT-4, LRG_PANEL_WIDTH-2, 3, "\033[38;2;"+std::to_string(color.red())+";"+std::to_string(color.green())+";"+std::to_string(color.blue())+"m");
     _hour = _game.date().hour();
     
     if(_hour >= 9 && _hour <= 18) {
@@ -87,9 +92,10 @@ void UITravel::setUITravel(bool paused, Event* event) {
     }
     
     if(event != nullptr) {
-        _popupPanel.setContents(event->popup());
+        StringList contents = Utils::centerText(*(event->popup()), POP_PANEL_WIDTH-2, POP_PANEL_HEIGHT-2);
+        _popupPanel.setContents(contents);
         _window.drawPanel(POP_PANEL_OFFSET_X, POP_PANEL_OFFSET_Y, _popupPanel);
-        _window.setColorRect(POP_PANEL_OFFSET_X+1, POP_PANEL_OFFSET_Y+1, POP_PANEL_WIDTH-2, POP_PANEL_HEIGHT-2, __RESET);
+        _window.setColorRect(POP_PANEL_OFFSET_X, POP_PANEL_OFFSET_Y, POP_PANEL_WIDTH, POP_PANEL_HEIGHT, __RESET);
     }
 
     Log::log("  %s%s%s" __RESET "\n", Utils::numerateString(" ", SML_PANEL_WIDTH+LRG_PANEL_WIDTH/2-ceil(date.size()/2.0)).c_str(), Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), date.c_str());
@@ -102,41 +108,47 @@ void UITravel::setUITravel(bool paused, Event* event) {
 }
 
 void UITravel::setUIStop() {
-    Log::log("\n");
-    DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change rations", "View party", "Save & exit"}));
-    switch(prompt.execute()) {
-        case 1:
-            // run();
-            break;
-        case 2: {
-            UIInventory uiInventory(_game.party().inventory(), _ui);
-            uiInventory.run();
-            // run();
-            break;
+    bool exit = false;
+
+    while (!exit) {
+        Log::log("\n");
+        DialoguePrompt prompt = DialoguePrompt("What would you like to do?", DialoguePrompt::StringList({"Continue on the trail", "Check inventory", "Change pace", "Change rations", "View party", "Save & exit"}));
+        switch(prompt.execute()) {
+            case 1:
+                exit = true;
+                break;
+            case 2: {
+                UIInventory uiInventory(_game.party().inventory(), _ui);
+                uiInventory.run();
+                // run();
+                break;
+            }
+            case 3:
+                setUIChoosePace();
+                // run();
+                break;
+            case 4:
+                setUIChooseRation();
+                // run();
+                break;
+            case 5: {
+                UIViewParty uiViewParty(_game.party(), _ui);
+                uiViewParty.run();
+                break;
+            }
+            case 6:
+                _ui.exit();
+                _exit = true;
+                exit = true;                
+                break;
         }
-        case 3:
-            setUIChoosePace();
-            // run();
-            break;
-        case 4:
-            setUIChooseRation();
-            // run();
-            break;
-        case 5: {
-            UIViewParty uiViewParty(_game.party(), _ui);
-            uiViewParty.run();
-            break;
-        }
-        case 6:
-            _ui.exit();
-            _exit = true;
-            break;
+        if(!exit) { drawTravelUI(true, nullptr); }
     }
 }
 
 void UITravel::setUIChoosePace() {
     _ui.clean();
-    setUITravel(true, nullptr);
+    drawTravelUI(true, nullptr);
     Log::log("\n");
     DialoguePrompt prompt = DialoguePrompt("What will the pace be?", DialoguePrompt::StringList({"Cancel","Slow","Normal","Fast"}));
     switch(prompt.execute()) {
@@ -154,7 +166,7 @@ void UITravel::setUIChoosePace() {
 
 void UITravel::setUIChooseRation() {
     _ui.clean();
-    setUITravel(true, nullptr);
+    drawTravelUI(true, nullptr);
     Log::log("\n");
     DialoguePrompt prompt = DialoguePrompt("What will the rations be?", DialoguePrompt::StringList({"Cancel","Minimal","Normal","Filling"}));
     switch(prompt.execute()) {

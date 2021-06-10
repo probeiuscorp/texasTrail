@@ -7,7 +7,12 @@ void TablePrompt::add(const StringList& row) {
     _cells.push_back(row);
     _height++;
 }
+
 int TablePrompt::execute() const {
+    return execute(1);
+}
+
+int TablePrompt::execute(int columns) const {
     Log::log("%s%s" __RESET "\n\n", Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str(), _prompt.c_str());
     
     vector<int> column_widths;
@@ -66,7 +71,7 @@ int TablePrompt::execute() const {
     chosen = getResponse();
 
     while(!isValidResponse(chosen)) {
-        Log::log( __RED "Invalid Reponse." __RESET " What is your choice? ");
+        Log::log( __RED "Invalid Response." __RESET " What is your choice? ");
         chosen = getResponse();
     }
 
