@@ -9,6 +9,7 @@
 #include "Log.h"
 #include "Date.h"
 #include "event/Event.h"
+#include "Hazard.h"
 #include <string>
 #include <vector>   
 #include <stdio.h>
@@ -40,7 +41,7 @@ class TexasTrail {
         const Date& date() const { return _date; }
         string formattedTime() const { return _date.formattedTime(); }
 
-    private: 
+    private:
         World* _world = nullptr;
         Party* _party = nullptr;
         Settings _settings;

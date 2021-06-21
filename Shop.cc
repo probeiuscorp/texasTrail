@@ -39,6 +39,7 @@ Shop::EnumShopRet Shop::purchaseStock(int index, int amount, Party& party) {
         int count = _stocks[index]->getCount();
         int actual = (amount > count ? count : amount);
         Stack& stack = _stocks[index]->getStack();
+        actual *= stack.count();
 
         if(_stocks[index]->getPrice()*actual > party.money()) {
             return EnumShopRet::NOT_ENOUGH_MONEY;
@@ -46,7 +47,7 @@ Shop::EnumShopRet Shop::purchaseStock(int index, int amount, Party& party) {
 
         Shop::EnumShopRet ret;
         if(_stocks[index]->getPrice()*actual <= party.money()) {
-            if(!(party.inventory().add(new Stack(stack.item(), actual)))) {
+            if(!(party.wagon().add(new Stack(stack.item(), actual)))) {
                 _stocks[index]->setCount(count-amount);
                 ret = EnumShopRet::SUCCESS;
             } else {

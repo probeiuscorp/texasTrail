@@ -8,6 +8,7 @@ namespace Enums {
             case Pace::NORMAL:
                 return 1.3;
             case Pace::SLOW:
+            default:
                 return 0.9;
         }
     }
@@ -19,6 +20,7 @@ namespace Enums {
             case Pace::NORMAL:
                 return string("Normal");
             case Pace::SLOW:
+            default:
                 return string("Slow");
         }
     }
@@ -30,6 +32,7 @@ namespace Enums {
             case Ration::NORMAL:
                 return string("Normal");
             case Ration::MINIMAL:
+            default:
                 return string("Minimal");
         }
     }

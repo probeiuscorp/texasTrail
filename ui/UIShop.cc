@@ -19,7 +19,7 @@ void UIShop::setUIPickItem() {
                                std::to_string(stock.getCount()), 
                                string(Utils::formatAsCurrency(stock.getPrice()))}));
     }
-    int choice = prompt.execute();
+    int choice = prompt.execute(2);
 
     if(choice != 0) {
         setUIPickCount(choice-1, Shop::EnumShopRet::SUCCESS);

@@ -4,11 +4,11 @@
 
 class EffectBrokenLeg : public Effect {
     public:
-        EffectBrokenLeg(Person* person);
+        EffectBrokenLeg();
         virtual ~EffectBrokenLeg() {}
 
-        virtual bool tick(int hours) override;
-        virtual string display() override;
+        virtual bool tick(Person* person, int hours) override;
+        virtual string display(Person* person) override;
 };
 
 #endif

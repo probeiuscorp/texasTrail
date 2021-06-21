@@ -2,6 +2,7 @@
 #define TEXAS_TRAIL_ITEMS_H
 #include "inventory/Item.h"
 #include "inventory/ItemFood.h"
+#include "ItemMedicine.h"
 
 class Items {
     public:
@@ -12,7 +13,7 @@ class Items {
         static const ItemFood BREAD;
         static const ItemFood FRUIT;
         static const ItemFood CIGAR;
-        
+        static const ItemMedicine MEDICINE;
 };
 
 #endif

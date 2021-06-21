@@ -8,7 +8,7 @@ class EventDeath : public Event {
         EventDeath(Person* person);
         virtual ~EventDeath() {};
 
-        virtual void callback(int ret) override;
+        virtual void callback() override;
 };
 
 #endif

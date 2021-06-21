@@ -1,30 +1,31 @@
 #ifndef TEXAS_TRAIL_WAGON_H
 #define TEXAS_TRAIL_WAGON_H
+#include "Inventory.h"
+#include "Hazard.h"
 #include <vector>
 #include <string>
 using std::vector;
 using std::string;
 
-class ICargo;
-class Wagon {
+class Stack;
+class Event;
+class Wagon : public Inventory {
     public:
-        using CargoList = vector<ICargo*>;
+        Wagon(double maxWeight) : Inventory(maxWeight) {}
+        virtual ~Wagon() {}
 
-    public:
-        Wagon(double capacity);
-        virtual ~Wagon();
+        static void registerHazard(WagonHazard* hazard) { _hazards.push_back(hazard); }
+        static vector<WagonHazard*> hazards() { return _hazards; }
 
-        // Returns false if adding the item failed, i.e. there wasn't enough space
-        virtual bool add(ICargo* item);
-        virtual const CargoList content() const;
-        virtual void remove(int index);
-        virtual double capacity() const { return _capacity; };
-        virtual double weight() const { return _weight; }
-    
+        virtual vector<Event*> tick(int hours);
+        virtual void addEvent(Event* event) { _events.push_back(event); }
+        virtual vector<Event*>& events() { return _events; }
+        virtual void clearEvents();
+
     private:
-        CargoList _content;
-        double _capacity;
-        double _weight = 0;
+        static vector<WagonHazard*> _hazards;
+
+        vector<Event*> _events;
 };
 
 #endif

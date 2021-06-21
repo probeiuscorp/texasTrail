@@ -25,6 +25,8 @@ class Date {
         void setDay(int day) { _day = day; }
         void setMonth(int month) { _month = month; }
         void setYear(int year) { _year = year; }
+        bool isDay() const;
+        bool isNight() const;
 
     private:
         int _hour;

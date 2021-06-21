@@ -18,6 +18,7 @@ class UIViewParty {
 
         virtual void setUIViewPerson(Person& person);
         virtual void setUIViewDeadPerson(Person& person);
+        virtual void setUIViewPersonImmunity(Person& person);
 };
 
 #endif

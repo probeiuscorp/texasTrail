@@ -1,29 +1,15 @@
 #include "Wagon.h"
-#include "ICargo.h"
+#include "Utils.h"
+#include "Event.h"
 
-Wagon::Wagon(double capacity) : _capacity(capacity) {}
-Wagon::~Wagon() {
-    for(ICargo* cargo : _content) {
-        delete cargo;
+vector<Event*> Wagon::tick(int hours) {
+    vector<Event*> events;
+    return events;
+}
+
+void Wagon::clearEvents() {
+    for(Event* event : _events) {
+        delete event;
     }
-}
-
-bool Wagon::add(ICargo* item) {
-    double weight = item->getWeight();
-    if(_weight + weight > _capacity) {
-        return false;
-    } else {
-        _content.push_back(item);
-        _weight += weight;
-        return true;
-    }
-}
-
-void Wagon::remove(int index) {
-    _weight -= _content[index]->getWeight();
-    _content.erase(_content.begin() += index);
-}
-
-const Wagon::CargoList Wagon::content() const {
-    return _content;
+    _events.clear();
 }

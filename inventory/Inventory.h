@@ -11,8 +11,8 @@ class Inventory {
     public:
         Inventory();
         Inventory(StackList stacks);
-        Inventory(int maxWeight);
-        Inventory(int maxWeight, StackList stacks);
+        Inventory(double maxWeight);
+        Inventory(double maxWeight, StackList stacks);
         virtual ~Inventory();
 
         // Returns true if there was not enough space
@@ -24,15 +24,15 @@ class Inventory {
         virtual StackList& stacks() { return _stacks; }
 
         virtual void setHasMax(bool hasMax) { _hasMax = hasMax; }
-        virtual void setMaxWeight(int maxWeight) { _maxWeight = maxWeight; }
+        virtual void setMaxWeight(double maxWeight) { _maxWeight = maxWeight; }
 
-    private:
+    protected:
         StackList _stacks;
-        int _maxWeight = 0;
+        double _maxWeight = 0;
         bool _hasMax = false;
-        int _currentWeight = 0;
+        double _currentWeight = 0;
 
-    private:
+    protected:
         virtual void updateWeight();
 };
 

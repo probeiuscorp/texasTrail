@@ -14,10 +14,10 @@ World* WorldGenerator::generateWorld() {
     Node* startNode = new Node(startCity, 10.0, 10.0);
 
     NodeFeature* endCity = new City("Dallas");
-    Node* endNode = new Node(endCity, 15.0, 15.0);
+    Node* endNode = new Node(endCity, 15.0, 60.0);
 
     NodeFeature* goalFeature = new EndNode("Lubbock");
-    Node* goalNode = new Node(goalFeature, 40.0, 35.0);
+    Node* goalNode = new Node(goalFeature, 380.0, 410.0);
 
     Path* connector = new Path(*startNode, *endNode, Biomes::FOREST);
     Path* toEnd = new Path(*endNode, *goalNode, Biomes::MOUNTAINS);

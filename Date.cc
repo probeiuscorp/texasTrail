@@ -22,29 +22,22 @@ string Date::formattedTime() const {
 
 void Date::advance(int hours) {
     _hour += hours;
-    if(_hour >= 24) {
+    if(_hour > 24) {
+        _hour %= 24;
         _day++;
         if(_day > monthLength(_month)) {
+            _day = 1;
             _month++;
             if(_month > 12) {
+                _month = 1;
                 _year++;
             }
         }
     }
-    _hour--;
-    _hour %= 24;
-    _hour++;
-    _day %= monthLength(_month);
-    _month %= 12;
-    /*
-
-    1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12
-
-    */
 }
 
 int Date::monthLength(int month) const {
-    if(_year % 4 == 0) {
+    if(_year % 4 == 0 && (_year % 100 != 0 || _year % 400 == 0)) {
         return _monthLengthsLeap[month-1];
     } else {
         return _monthLengths[month-1];
@@ -63,4 +56,12 @@ string Date::pad(string str, int num, string with) const {
         str = with + str;
     }
     return str;
+}
+
+bool Date::isDay() const {
+    return _hour >= 6 && _hour <= 22;    
+}
+
+bool Date::isNight() const {
+    return !isDay();
 }

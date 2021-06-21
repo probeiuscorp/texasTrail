@@ -5,6 +5,7 @@
 #define __GREEN "\33[0;32m"
 #define __CYAN "\33[0;36m"
 #define __WHITE "\33[0;37m"
+#define __GRAY "\33[0;90m"
 #define __RESET "\033[0m"
 #define __BOLD "\33[01m"
 #define __ITALIC "\33[03m"

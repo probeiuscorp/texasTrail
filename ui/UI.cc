@@ -69,7 +69,7 @@ void UI::setUIParty() {
     for(Person* person : _people) {
         Log::log(" > %s\n", person->name().c_str());
     }
-    Log::log(__GREEN "Press 'ENTER' to continue: " __RESET);
+    Log::log(__GREEN "Press 'ENTER' to continue " __RESET);
     std::cin.get();
     
     setUIConfirmNewGame();

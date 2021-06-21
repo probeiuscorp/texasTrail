@@ -1,4 +1,8 @@
 #include "Utils.h"
+#include "Log.h"
+#include "Colors.h"
+#include <iostream>
+#include <stdarg.h>
 
 string Utils::formatAsCurrency(double dbl) {
     string str = string("$"+stringifyAndRound(dbl, 2));
@@ -70,6 +74,11 @@ bool Utils::chance(double chance) {
     return (double)rand()/RAND_MAX < chance;
 }
 
+void Utils::awaitEnterKey() {
+    Log::log("%sPress 'ENTER' to continue " __RESET, Style::New(Formatting::Color::YELLOW).with(Formatting::Format::BOLD).text().c_str());
+    std::cin.get();
+}
+
 Utils::StringList Utils::centerText(StringList stringList, int width, int height) {
     StringList newList;
     for(int i=0;i<(height-stringList.size())/2;i++) {
@@ -84,10 +93,45 @@ Utils::StringList Utils::centerText(StringList stringList, int width, int height
     return newList;
 }
 
-double Utils::max(double d1, double d2) {
-    return d1 > d2 ? d1 : d2;
+Utils::StringList Utils::centerTextAndWrap(string str, int width, int height) {
+    StringList list;
+    string rest = string(str);
+    while(rest.size() > width) {
+        int end = width;
+        for(int i=width-1;i>=0;i--) {
+            if(rest[i] == ' ') {
+                end = i;
+                break;
+            }
+        }
+        string part = rest.substr(0, end);
+        list.push_back(part);
+        rest = rest.substr(end);
+    }
+    list.push_back(rest);
+    return centerText(list, width, height);
 }
 
-double Utils::min(double d1, double d2) {
-    return d1 < d2 ? d1 : d2;
+double Utils::max(int n, ...) {
+    va_list ap;
+    va_start(ap, n);
+    double max = va_arg(ap, double);
+    for(int i = 2; i <= n; i++) {
+        double a = va_arg(ap, double);
+        if(a > max) max = a;
+    }
+    va_end(ap);
+    return max;
+}
+
+double Utils::min(int n, ...) {
+    va_list ap;
+    va_start(ap, n);
+    double min = va_arg(ap, double);
+    for(int i = 2; i <= n; i++) {
+        double a = va_arg(ap, double);
+        if(a < min) min = a;
+    }
+    va_end(ap);
+    return min;
 }

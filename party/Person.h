@@ -2,10 +2,16 @@
 #define TEXAS_TRAIL_PERSON_H
 #include "Effect.h"
 #include "Event.h"
+#include "Immunity.h"
+#include "Hazard.h"
+#include "Stats.h"
+#include "Date.h"
 #include <string>
 #include <vector>
+#include <list>
 using std::string;
 using std::vector;
+using std::list;
 
 class Person {
     public:
@@ -17,6 +23,7 @@ class Person {
     public:
         using EffectList = vector<Effect*>;
         using EventList = vector<Event*>;
+        using HazardList = vector<PersonHazard*>;
 
     public:
         Person(string name, Gender gender);
@@ -31,8 +38,16 @@ class Person {
         double energy() const { return _energy; }
         void modifyEnergy(double energyM) { _energy += energyM; }
         EffectList effects() const { return _effects; }
+        void addEffect(Effect* effect) { _effects.push_back(effect); }
+        bool hasEffect(Effect* effect) const;
+        void removeEffect(Effect* effect);
         bool isDead() const { return _dead; }
         Gender gender() const { return _gender; }
+        void addEvent(Event* event) { _events.push_back(event); }
+        EventList& events() { return _events; }
+        void clearEvents();
+        Immunity& immunity() { return _immunity; }
+        Stats& stats() { return _stats; }
 
         EventList tick(int hours);
         void kill();
@@ -44,6 +59,9 @@ class Person {
         bool _dead = false;
         EffectList _effects;
         Gender _gender;
+        EventList _events;
+        Immunity _immunity;
+        Stats _stats;
 };
 
 #endif

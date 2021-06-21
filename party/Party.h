@@ -21,10 +21,10 @@ class Party {
         Party(vector<Person*> members, World& world);
         virtual ~Party();
 
+        static void registerHazard(PartyHazard* hazard) { _hazards.push_back(hazard); }
+
         Person& getPartyMember(int index);
         int getPartySize() const;
-        Inventory& inventory() { return _inventory; }
-        const Inventory& CInventory() const { return _inventory; }
         Path* path() { return _path; }
         Node* node() { return _node; }
         void setNode(Node* node) { _node = node; }
@@ -37,13 +37,18 @@ class Party {
         double money() const { return _money; }
         void setMoney(double money) { _money = money; }
         bool modifyMoney(double moneyM);
-        EventList tick(int hours);
+        EventList tick(int hours, Date* date);
+        void clearEvents();
         Wagon& wagon() { return _wagon; }
+        // true if succesful
+        void setHours(vector<bool> hours);
+        void setHour(int hour, bool val) { _hoursActive[hour-1] = val; }
+        vector<bool> hoursActive() { return _hoursActive; }
+
 
     private:
         int _partySize = 4;
         vector<Person*> _members;
-        Inventory _inventory;
         World& _world;
         Wagon _wagon;
 
@@ -53,6 +58,13 @@ class Party {
         double _money = 0;
         Enums::Pace _pace = Enums::Pace::NORMAL;
         Enums::Ration _ration = Enums::Ration::NORMAL;
+        vector<bool> _hoursActive = vector<bool>({
+          //1      2      3      4      5      6      7      8      9      10     11     12
+            false, false, false, false, false, false, false, false, true,  true,  true,  true,
+            true,  false, true,  true,  true,  true,  true,  true,  false, false, false, false
+        });
+
+        static vector<PartyHazard*> _hazards;
 };
 
 #endif

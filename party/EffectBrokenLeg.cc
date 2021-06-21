@@ -1,14 +1,14 @@
 #include "EffectBrokenLeg.h"
 #include "Person.h"
 
-EffectBrokenLeg::EffectBrokenLeg(Person* person) : Effect(person) {}
+EffectBrokenLeg::EffectBrokenLeg() : Effect() {}
 
-bool EffectBrokenLeg::tick(int hours) {
+bool EffectBrokenLeg::tick(Person* person, int hours) {
     // person->modifyHealth(-0.8*hours);
-    _person->kill();
+    person->kill();
     return false;
 }
 
-string EffectBrokenLeg::display() {
+string EffectBrokenLeg::display(Person* person) {
     return "Broken leg. Party speed reduced to 25% unless put in wagon.";
 }

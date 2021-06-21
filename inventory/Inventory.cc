@@ -2,8 +2,8 @@
 
 Inventory::Inventory() : _stacks(StackList()) {}
 Inventory::Inventory(StackList stacks) : _stacks(stacks) {}
-Inventory::Inventory(int maxWeight) : _maxWeight(maxWeight), _stacks(StackList()) {}
-Inventory::Inventory(int maxWeight, StackList stacks) : _maxWeight(maxWeight), _stacks(stacks) {} 
+Inventory::Inventory(double maxWeight) : _maxWeight(maxWeight), _stacks(StackList()) {}
+Inventory::Inventory(double maxWeight, StackList stacks) : _maxWeight(maxWeight), _stacks(stacks) {} 
 Inventory::~Inventory() {
     for(Stack* stack : _stacks) {
         delete stack;

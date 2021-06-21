@@ -1,14 +1,14 @@
 #ifndef TEXAS_TRAIL_UI_TRAVEL_H
 #define TEXAS_TRAIL_UI_TRAVEL_H
-#include "ui/UI.h"
+#include "UI.h"
 #include "Utils.h"
 #include "Colors.h"
 #include "Formatting.h"
 #include "Resources.h"
-#include "render/Panel.h"
-#include "render/Window.h"
-#include "ui/UIInventory.h"
-#include "event/Event.h"
+#include "Panel.h"
+#include "Window.h"
+#include "UIInventory.h"
+#include "Event.h"
 #include <iostream>
 #include <sys/poll.h>
 #include <string>
@@ -34,7 +34,7 @@ class UITravel {
         const static int SML_PANEL_WIDTH = 24;
         const static int SML_PANEL_HEIGHT = 9;
         const static int POP_PANEL_WIDTH = 46;
-        const static int POP_PANEL_HEIGHT = 5;
+        const static int POP_PANEL_HEIGHT = 7;
         const static int LRG_PANEL_WIDTH = 62;
         const static int LRG_PANEL_HEIGHT = 21;
         const static int POP_PANEL_OFFSET_X = SML_PANEL_WIDTH + LRG_PANEL_WIDTH/2 - POP_PANEL_WIDTH/2;
